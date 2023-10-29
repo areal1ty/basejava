@@ -1,11 +1,15 @@
+package com.basejava.webapp.storage;
+
+import com.basejava.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int size = 0;
+    private final Resume[] storage = new Resume[10000];
+    private int size = 0;
 
-    void clear() {
+    public void clear() {
         if (size > 0) {
           for (int i = 0; i < size; i++) {
               storage[i] = null;
@@ -15,7 +19,8 @@ public class ArrayStorage {
     }
 
 
-    void save(Resume r) {
+    public void save(Resume r) {
+        // TODO check if resume is not present
         if (size < storage.length) {
             storage[size] = r;
             size++;
@@ -24,17 +29,18 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) return storage[i];
+            if (storage[i].getUuid().equals(uuid)) return storage[i];
         }
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
+        // TODO check if resume is not present
         if (size > 0) {
             for (int index = 0; index < size; index++) {
-                if (storage[index].uuid.equals(uuid)) {
+                if (storage[index].getUuid().equals(uuid)) {
                     System.arraycopy(storage, index + 1, storage, index, size - index);
                     size--;
                     break;
@@ -46,13 +52,13 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] allResumes = new Resume[size];
         System.arraycopy(storage, 0, allResumes, 0, size);
         return allResumes;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 }
