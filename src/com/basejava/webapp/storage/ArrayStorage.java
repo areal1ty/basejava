@@ -18,35 +18,49 @@ public class ArrayStorage {
         }
     }
 
+    public void update(Resume r) {
 
+    }
     public void save(Resume r) {
         // TODO check if resume is not present
-        if (size < storage.length) {
+        // size < storage.length
+        if (findIndex(r.getUuid()) == -1) {
             storage[size] = r;
             size++;
+            System.out.println("Резюме " + r.getUuid() + " успешно добавлено");
+        } else if (size < storage.length){
+            System.out.println("Ошибка. База данных заполнена!");
         } else {
-            System.out.println("Ошибка. Хранилище заполнено!");
+            System.out.println("Ошибка. Резюме " + r.getUuid() + " уже находится в базе данных");
         }
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) return storage[i];
+        int i = findIndex(uuid);
+        if (i == -1) {
+            System.out.println("Резюме " + uuid + " не найдено. Попробуйте еще раз!");
         }
-        return null;
+        return storage[i];
     }
 
     public void delete(String uuid) {
-        // TODO check if resume is not present
-        if (size > 0) {
-            for (int index = 0; index < size; index++) {
-                if (storage[index].getUuid().equals(uuid)) {
-                    System.arraycopy(storage, index + 1, storage, index, size - index);
-                    size--;
-                    break;
-                }
-            }
+        int i = findIndex(uuid);
+        if (i == -1) {
+            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
         }
+        else if (size == 0) {
+            System.out.println("База данных пустая, удаление невозможно");
+        }
+        System.arraycopy(storage, i + 1, storage, i, size - 1);
+        size--;
+        System.out.println("Резюме " + uuid + " успешно удалено");
+        }
+
+    private int findIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) return i;
+        }
+        return -1;
     }
 
     /**
