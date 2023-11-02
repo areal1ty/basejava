@@ -7,22 +7,19 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
-        if (size > 0) {
             Arrays.fill(storage, 0, size, null);
             size = 0;
-        } else {
-            System.out.println("Ошибка. База данных пустая");
-        }
     }
 
     public void update(Resume r) {
-        int i = findIndex(r.getUuid());
-        if (i != -1) {
-            storage[i] = r;
+        int index = findIndex(r.getUuid());
+        if (index != -1) {
+            storage[index] = r;
             System.out.println("Резюме " + r.getUuid() + " успешно обновлено");
         } else {
             System.out.println("Ошибка. Резюме " + r.getUuid() + " не найдено. Попробуйте еще раз");
@@ -42,23 +39,21 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int i = findIndex(uuid);
-        if (i == -1) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             System.out.println("Резюме " + uuid + " не найдено. Попробуйте еще раз!");
             return null;
         }
-        return storage[i];
+        return storage[index];
     }
 
     public void delete(String uuid) {
-        int i = findIndex(uuid);
-        if (i == -1) {
+        int index = findIndex(uuid);
+        if (index == -1) {
             System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
-        }
-        else if (size == 0) {
-            System.out.println("База данных пустая, удаление невозможно");
         } else {
-        System.arraycopy(storage, i + 1, storage, i, size - 1);
+           storage[index] = storage[size - 1];
+        // System.arraycopy(storage, index + 1, storage, index, size - 1);
         size--;
         System.out.println("Резюме " + uuid + " успешно удалено");
         }
