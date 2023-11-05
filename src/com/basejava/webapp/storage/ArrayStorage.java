@@ -6,14 +6,15 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private final int STORAGE_LIMIT = 10000;
+
+public class ArrayStorage implements Storage {
+    private static final int STORAGE_LIMIT = 10000;
     private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
-            Arrays.fill(storage, 0, size, null);
-            size = 0;
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     public void update(Resume r) {
@@ -31,7 +32,7 @@ public class ArrayStorage {
             storage[size] = r;
             size++;
             System.out.println("Резюме " + r.getUuid() + " успешно добавлено");
-        } else if (size > storage.length){
+        } else if (size > storage.length) {
             System.out.println("Ошибка. База данных заполнена!");
         } else {
             System.out.println("Ошибка. Резюме " + r.getUuid() + " уже находится в базе данных");
@@ -52,10 +53,10 @@ public class ArrayStorage {
         if (index == -1) {
             System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
         } else {
-           storage[index] = storage[size - 1];
-        // System.arraycopy(storage, index + 1, storage, index, size - 1);
-        size--;
-        System.out.println("Резюме " + uuid + " успешно удалено");
+            storage[index] = storage[size - 1];
+            // System.arraycopy(storage, index + 1, storage, index, size - 1);
+            size--;
+            System.out.println("Резюме " + uuid + " успешно удалено");
         }
     }
 
