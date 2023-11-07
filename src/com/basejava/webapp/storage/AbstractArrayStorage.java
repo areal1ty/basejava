@@ -8,55 +8,25 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void clear() {
+    public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index != -1) {
-            storage[index] = r;
-            System.out.println("Резюме " + r.getUuid() + " успешно обновлено");
-        } else {
-            System.out.println("Ошибка. Резюме " + r.getUuid() + " не найдено. Попробуйте еще раз");
-        }
-    }
-
-    public void save(Resume r) {
-        if (findIndex(r.getUuid()) == -1) {
-            storage[size] = r;
-            size++;
-            System.out.println("Резюме " + r.getUuid() + " успешно добавлено");
-        } else if (size > storage.length) {
-            System.out.println("Ошибка. База данных заполнена!");
-        } else {
-            System.out.println("Ошибка. Резюме " + r.getUuid() + " уже находится в базе данных");
-        }
-    }
-
-    public Resume get(String uuid) {
+    public final Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Резюме " + uuid + " не найдено. Попробуйте еще раз!");
             return null;
         }
         return storage[index];
     }
 
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index == -1) {
-            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
-        } else {
-            storage[index] = storage[size - 1];
-            // System.arraycopy(storage, index + 1, storage, index, size - 1);
-            size--;
-            System.out.println("Резюме " + uuid + " успешно удалено");
-        }
-    }
-
     protected abstract int findIndex(String uuid);
+
+    public final int size() {
+        return size;
+    }
 
     /**
      * @return array, contains only Resumes in storage (without null)
@@ -65,7 +35,4 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
 }
