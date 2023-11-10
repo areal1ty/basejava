@@ -15,11 +15,17 @@ public class MainTestSortedArrayStorage {
         r3.setUuid("7");
         Resume r4 = new Resume();
         r4.setUuid("3");
+        Resume r5 = new Resume();
+        r5.setUuid("3");
+
 
         SORTED_ARRAY_STORAGE.save(r1);
         SORTED_ARRAY_STORAGE.save(r2);
         SORTED_ARRAY_STORAGE.save(r3);
         SORTED_ARRAY_STORAGE.save(r4);
+        SORTED_ARRAY_STORAGE.save(r5);
+
+        SORTED_ARRAY_STORAGE.update(r5);
 
         System.out.println("Get r1: " + SORTED_ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + SORTED_ARRAY_STORAGE.size());

@@ -7,12 +7,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void update(Resume r) {
-        int index = findIndex(r.getUuid());
+        String uuid = r.getUuid();
+        int index = findIndex(uuid);
         if (index >= 0) {
             storage[index] = r;
-            System.out.println("Резюме " + r.getUuid() + " успешно обновлено");
+            System.out.println("Резюме " + uuid + " успешно обновлено");
         } else {
-            System.out.println("Ошибка. Резюме " + r.getUuid() + " не найдено. Попробуйте еще раз");
+            System.out.println("Ошибка. Резюме " + uuid + " не найдено. Попробуйте еще раз");
         }
     }
 
@@ -20,16 +21,24 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     public void save(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (index < 0) {
-            index = -(index + 1);
-            storage[index] = r;
-            size++;
-            System.out.println("Резюме " + uuid + " успешно добавлено");
-        } else if (size > storage.length) {
-            System.out.println("Ошибка. База данных заполнена!");
-        } else {
+        if (index > 0) {
             System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
+            return;
+        } else if (size >= storage.length) {
+            System.out.println("Ошибка. База данных заполнена!");
+            return;
         }
+        index = -(index + 1);
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+            /*
+                for (int i = size - 1; i >= index; i--) {
+                    storage[i + 1] = storage[i];
+                }
+
+             */
+        storage[index] = r;
+        size++;
+        System.out.println("Резюме " + uuid + " успешно добавлено");
     }
 
     @Override
@@ -38,9 +47,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (index < 0) {
             System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
         } else {
-            for (int i = index; i < size; i++) {
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+            /* for (int i = index; i < size; i++) {
                 storage[i] = storage[i + 1];
             }
+
+             */
+            storage[size] = null;
             size--;
             System.out.println("Резюме " + uuid + " успешно удалено");
         }
