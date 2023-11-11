@@ -9,11 +9,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     public void update(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (index >= 0) {
+        if (isExist(uuid, index)) {
             storage[index] = r;
             System.out.println("Резюме " + uuid + " успешно обновлено");
-        } else {
-            System.out.println("Ошибка. Резюме " + uuid + " не найдено. Попробуйте еще раз");
         }
     }
 
@@ -21,38 +19,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     public void save(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (index > 0) {
-            System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
-            return;
-        } else if (size >= storage.length) {
-            System.out.println("Ошибка. База данных заполнена!");
-            return;
-        }
+        if (isValidForSave(uuid, index)) {
         index = -(index + 1);
         System.arraycopy(storage, index, storage, index + 1, size - index);
-            /*
-                for (int i = size - 1; i >= index; i--) {
-                    storage[i + 1] = storage[i];
-                }
-
-             */
         storage[index] = r;
         size++;
         System.out.println("Резюме " + uuid + " успешно добавлено");
+        }
     }
 
     @Override
     public void delete(String uuid) {
         int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
-        } else {
+        if (isExist(uuid, index)) {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-            /* for (int i = index; i < size; i++) {
-                storage[i] = storage[i + 1];
-            }
-
-             */
             storage[size] = null;
             size--;
             System.out.println("Резюме " + uuid + " успешно удалено");

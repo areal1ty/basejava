@@ -8,6 +8,25 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    public final boolean isValidForSave(String uuid, int index){
+        if (index > 0) {
+            System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
+            return false;
+        } else if (size >= storage.length) {
+            System.out.println("Ошибка. База данных заполнена!");
+            return false;
+        }
+        return true;
+    }
+
+    public final boolean isExist(String uuid, int index) {
+        if (index < 0) {
+            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
+            return false;
+        }
+        return true;
+    }
+
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -15,8 +34,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Резюме " + uuid + " не найдено. Попробуйте еще раз!");
+        if (!isExist(uuid,index)) {
             return null;
         }
         return storage[index];

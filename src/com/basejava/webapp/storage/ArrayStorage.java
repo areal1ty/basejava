@@ -8,32 +8,27 @@ import com.basejava.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
     public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index != -1) {
+        String uuid = r.getUuid();
+        int index = findIndex(uuid);
+        if (isExist(uuid, index)) {
             storage[index] = r;
             System.out.println("Резюме " + r.getUuid() + " успешно обновлено");
-        } else {
-            System.out.println("Ошибка. Резюме " + r.getUuid() + " не найдено. Попробуйте еще раз");
         }
     }
 
     public void save(Resume r) {
-        if (findIndex(r.getUuid()) == -1) {
+        String uuid = r.getUuid();
+        int index = findIndex(uuid);
+        if (isValidForSave(uuid, index)) {
             storage[size] = r;
             size++;
-            System.out.println("Резюме " + r.getUuid() + " успешно добавлено");
-        } else if (size > storage.length) {
-            System.out.println("Ошибка. База данных заполнена!");
-        } else {
-            System.out.println("Ошибка. Резюме " + r.getUuid() + " уже находится в базе данных");
+            System.out.println("Резюме " + uuid + " успешно добавлено");
         }
     }
 
     public void delete(String uuid) {
         int index = findIndex(uuid);
-        if (index == -1) {
-            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
-        } else {
+        if (isExist(uuid, index)) {
             storage[index] = storage[size - 1];
             size--;
             System.out.println("Резюме " + uuid + " успешно удалено");
