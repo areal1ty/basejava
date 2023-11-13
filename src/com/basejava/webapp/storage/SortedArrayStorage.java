@@ -5,38 +5,17 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    @Override
-    public void update(Resume r) {
-        String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        if (isExist(uuid, index)) {
-            storage[index] = r;
-            System.out.println("Резюме " + uuid + " успешно обновлено");
-        }
-    }
-
-    @Override
-    public void save(Resume r) {
-        String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        if (isValidForSave(uuid, index)) {
+    public void shiftAndSave(int index, Resume r) {
         index = -(index + 1);
         System.arraycopy(storage, index, storage, index + 1, size - index);
         storage[index] = r;
         size++;
-        System.out.println("Резюме " + uuid + " успешно добавлено");
-        }
     }
 
-    @Override
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (isExist(uuid, index)) {
-            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-            storage[size] = null;
-            size--;
-            System.out.println("Резюме " + uuid + " успешно удалено");
-        }
+    public void shiftAndDelete(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+        storage[size] = null;
+        size--;
     }
 
     protected int findIndex(String uuid) {

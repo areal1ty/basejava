@@ -8,6 +8,17 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    public void save(Resume r) {
+        String uuid = r.getUuid();
+        int index = findIndex(uuid);
+        if (isValidForSave(uuid, index)) {
+        shiftAndSave(index, r);
+        System.out.println("Резюме " + uuid + " успешно добавлено");
+        }
+    }
+
+    protected abstract void shiftAndSave(int index, Resume r);
+
     public final boolean isValidForSave(String uuid, int index){
         if (index > 0) {
             System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
@@ -19,6 +30,15 @@ public abstract class AbstractArrayStorage implements Storage {
         return true;
     }
 
+    public final void update(Resume r) {
+        String uuid = r.getUuid();
+        int index = findIndex(uuid);
+        if (isExist(uuid, index)) {
+            storage[index] = r;
+            System.out.println("Резюме " + uuid + " успешно обновлено");
+        }
+    }
+
     public final boolean isExist(String uuid, int index) {
         if (index < 0) {
             System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
@@ -26,6 +46,16 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         return true;
     }
+
+    public void delete(String uuid) {
+        int index = findIndex(uuid);
+        if (isExist(uuid, index)) {
+            shiftAndDelete(index);
+            System.out.println("Резюме " + uuid + " успешно удалено");
+        }
+    }
+
+    protected abstract void shiftAndDelete(int index);
 
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
