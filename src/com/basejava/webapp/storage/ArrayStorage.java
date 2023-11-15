@@ -8,12 +8,12 @@ import com.basejava.webapp.model.Resume;
 
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void shiftAndSave(int index, Resume r) {
+    public void insert(int index, Resume r) {
         storage[size] = r;
         size++;
     }
 
-    public void shiftAndDelete(int index) {
+    public void fillEmpty(int index) {
         storage[index] = storage[size - 1];
         size--;
     }

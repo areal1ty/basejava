@@ -5,14 +5,14 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    public void shiftAndSave(int index, Resume r) {
+    public void insert(int index, Resume r) {
         index = -(index + 1);
         System.arraycopy(storage, index, storage, index + 1, size - index);
         storage[index] = r;
         size++;
     }
 
-    public void shiftAndDelete(int index) {
+    public void fillEmpty(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         storage[size] = null;
         size--;

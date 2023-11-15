@@ -8,27 +8,19 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void save(Resume r) {
+    public final void save(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (isValidForSave(uuid, index)) {
-        shiftAndSave(index, r);
-        System.out.println("Резюме " + uuid + " успешно добавлено");
-        }
-    }
-
-    protected abstract void shiftAndSave(int index, Resume r);
-
-    public final boolean isValidForSave(String uuid, int index){
         if (index > 0) {
             System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
-            return false;
+            return;
         } else if (size >= storage.length) {
             System.out.println("Ошибка. База данных заполнена!");
-            return false;
+            return;
         }
-        return true;
-    }
+        insert(index, r);
+        System.out.println("Резюме " + uuid + " успешно добавлено");
+        }
 
     public final void update(Resume r) {
         String uuid = r.getUuid();
@@ -47,15 +39,13 @@ public abstract class AbstractArrayStorage implements Storage {
         return true;
     }
 
-    public void delete(String uuid) {
+    public final void delete(String uuid) {
         int index = findIndex(uuid);
         if (isExist(uuid, index)) {
-            shiftAndDelete(index);
+            fillEmpty(index);
             System.out.println("Резюме " + uuid + " успешно удалено");
         }
     }
-
-    protected abstract void shiftAndDelete(int index);
 
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -70,8 +60,6 @@ public abstract class AbstractArrayStorage implements Storage {
         return storage[index];
     }
 
-    protected abstract int findIndex(String uuid);
-
     public final int size() {
         return size;
     }
@@ -79,8 +67,13 @@ public abstract class AbstractArrayStorage implements Storage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll() {
+    public final Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
+
+    protected abstract void insert(int index, Resume r);
+    protected abstract int findIndex(String uuid);
+    protected abstract void fillEmpty(int index);
+
 
 }
