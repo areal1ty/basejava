@@ -10,12 +10,10 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     public void insert(int index, Resume r) {
         storage[size] = r;
-        size++;
     }
 
     public void fillEmpty(int index) {
         storage[index] = storage[size - 1];
-        size--;
     }
 
     protected int findIndex(String uuid) {

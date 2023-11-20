@@ -7,16 +7,11 @@ import com.basejava.webapp.storage.Storage;
 public class MainTestSortedArrayStorage {
     static final Storage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
     public static void main(String[] args) {
-        Resume r1 = new Resume();
-        r1.setUuid("6");
-        Resume r2 = new Resume();
-        r2.setUuid("2");
-        Resume r3 = new Resume();
-        r3.setUuid("7");
-        Resume r4 = new Resume();
-        r4.setUuid("3");
-        Resume r5 = new Resume();
-        r5.setUuid("3");
+        Resume r1 = new Resume("6");
+        Resume r2 = new Resume("2");
+        Resume r3 = new Resume("7");
+        Resume r4 = new Resume("3");
+        Resume r5 = new Resume("3");
 
 
         SORTED_ARRAY_STORAGE.save(r1);

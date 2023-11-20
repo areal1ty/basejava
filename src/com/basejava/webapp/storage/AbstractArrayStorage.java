@@ -1,5 +1,8 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
+import com.basejava.webapp.exception.NotExistStorageException;
+import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 import java.util.Arrays;
 
@@ -12,13 +15,12 @@ public abstract class AbstractArrayStorage implements Storage {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
         if (index > 0) {
-            System.out.println("Ошибка. Резюме " + uuid + " уже находится в базе данных");
-            return;
-        } else if (size >= storage.length) {
-            System.out.println("Ошибка. База данных заполнена!");
-            return;
+            throw new ExistStorageException(uuid);
+        } else if (size >= STORAGE_LIMIT) {
+            throw new StorageException("Storage overflow", uuid);
         }
         insert(index, r);
+        size++;
         System.out.println("Резюме " + uuid + " успешно добавлено");
         }
 
@@ -33,8 +35,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final boolean isExist(String uuid, int index) {
         if (index < 0) {
-            System.out.println("Резюме с UUID " + uuid + " не найдено. Попробуйте еще раз!");
-            return false;
+            throw new NotExistStorageException(uuid);
         }
         return true;
     }
@@ -43,6 +44,7 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = findIndex(uuid);
         if (isExist(uuid, index)) {
             fillEmpty(index);
+            size--;
             System.out.println("Резюме " + uuid + " успешно удалено");
         }
     }
@@ -74,6 +76,5 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract void insert(int index, Resume r);
     protected abstract int findIndex(String uuid);
     protected abstract void fillEmpty(int index);
-
 
 }
