@@ -35,7 +35,6 @@ public class MainArray {
                     break;
                 case "save":
                     r = new Resume(uuid);
-                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;

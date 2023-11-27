@@ -2,7 +2,6 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-
 /**
  * Array based storage for Resumes
  */
@@ -25,4 +24,5 @@ public interface Storage {
     Resume[] getAll();
 
     int size();
+
 }

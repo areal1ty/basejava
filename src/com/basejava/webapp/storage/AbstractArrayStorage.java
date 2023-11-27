@@ -52,6 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
+        System.out.println("База данных успешно очищена");
     }
 
     public final Resume get(String uuid) {
