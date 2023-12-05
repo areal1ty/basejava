@@ -1,9 +1,9 @@
 package com.basejava.webapp.storage;
-
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
+
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage {
@@ -14,38 +14,40 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void save(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistStorageException(uuid);
         } else if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", uuid);
+        } else {
+            insert(index, r);
+            size++;
+            System.out.println("Резюме " + uuid + " успешно добавлено");
         }
-        insert(index, r);
-        size++;
-        System.out.println("Резюме " + uuid + " успешно добавлено");
-        }
+    }
 
     public final void update(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (isExist(uuid, index)) {
+        if (isExist(index)) {
             storage[index] = r;
             System.out.println("Резюме " + uuid + " успешно обновлено");
+        } else {
+            throw new NotExistStorageException(uuid);
         }
     }
 
-    public final boolean isExist(String uuid, int index) {
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return true;
+    public final boolean isExist(int index) {
+        return (index >= 0);
     }
 
     public final void delete(String uuid) {
         int index = findIndex(uuid);
-        if (isExist(uuid, index)) {
+        if (isExist(index)) {
             fillEmpty(index);
             size--;
             System.out.println("Резюме " + uuid + " успешно удалено");
+        } else {
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -57,11 +59,13 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (!isExist(uuid,index)) {
-            return null;
+        if (!isExist(index)) {
+            throw new NotExistStorageException(uuid);
+        } else {
+            return storage[index];
         }
-        return storage[index];
     }
+
 
     public final int size() {
         return size;
@@ -75,7 +79,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract void insert(int index, Resume r);
-    protected abstract int findIndex(String uuid);
-    protected abstract void fillEmpty(int index);
 
+    protected abstract int findIndex(String uuid);
+
+    protected abstract void fillEmpty(int index);
 }
