@@ -1,79 +1,62 @@
 package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.ExistStorageException;
-import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public final void save(Resume r) {
+    @Override
+    public final boolean isValid(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
         if (index >= 0) {
             throw new ExistStorageException(uuid);
         } else if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", uuid);
-        } else {
-            insert(index, r);
-            size++;
-            System.out.println("Резюме " + uuid + " успешно добавлено");
-        }
+        } else return true;
     }
 
-    public final void update(Resume r) {
+    @Override
+    public final void saveElement(Resume r) {
         String uuid = r.getUuid();
         int index = findIndex(uuid);
-        if (isExist(index)) {
-            storage[index] = r;
-            System.out.println("Резюме " + uuid + " успешно обновлено");
-        } else {
-            throw new NotExistStorageException(uuid);
+        insert(index, r);
+        size++;
         }
+
+    @Override
+    public final void replace(int index, Resume r) {
+        storage[index] = r;
     }
 
-    public final boolean isExist(int index) {
-        return (index >= 0);
+    @Override
+    public final void removeElement(int index) {
+        fillEmpty(index);
+        size--;
     }
 
-    public final void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (isExist(index)) {
-            fillEmpty(index);
-            size--;
-            System.out.println("Резюме " + uuid + " успешно удалено");
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    public final void clear() {
+    @Override
+    public final void removeAll() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-        System.out.println("База данных успешно очищена");
     }
 
-    public final Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            return storage[index];
-        }
+    @Override
+    public final Resume getResume(int index) {
+        return storage[index];
     }
 
-
+    @Override
     public final int size() {
         return size;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
+    @Override
     public final Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
