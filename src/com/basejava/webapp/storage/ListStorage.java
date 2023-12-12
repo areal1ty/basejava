@@ -1,8 +1,6 @@
 package com.basejava.webapp.storage;
 
-import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.model.Resume;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,16 +8,7 @@ public class ListStorage extends AbstractStorage {
     protected final List<Resume> storage = new ArrayList<>();
 
     @Override
-    protected boolean isValid(Resume r) {
-        String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        } else return true;
-    }
-
-    @Override
-    protected void saveElement(Resume r) {
+    protected void saveElement(Object index, Resume r) {
         storage.add(r);
     }
 
@@ -34,14 +23,21 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int findIndex(String uuid) {
-        Resume r = get(uuid);
-        return storage.indexOf(r);
+    protected Integer findIndex(String uuid) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) return i;
+        }
+        return null;
     }
 
     @Override
     protected Resume getResume(int index) {
         return storage.get(index);
+    }
+
+    @Override
+    public final boolean isExist(Integer index) {
+        return (index != null);
     }
 
     @Override

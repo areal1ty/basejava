@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
 
@@ -12,53 +13,55 @@ public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
         String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        if (doesNotExist(index)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            replace(index, r);
-            System.out.println("Резюме " + uuid + " успешно обновлено");
+        Object index = findExistingIndex(uuid);
+        replace((Integer) index, r);
+        System.out.println("Резюме " + uuid + " успешно обновлено");
         }
-    }
 
     public void save(Resume r) {
         String uuid = r.getUuid();
-        if (isValid(r)) {
-            saveElement(r);
-            System.out.println("Резюме " + uuid + " успешно добавлено");
-        }
+        Object index = findNonExistingIndex(uuid);
+        saveElement(index, r);
+        System.out.println("Резюме " + uuid + " успешно добавлено");
     }
 
     public final Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (doesNotExist(index)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            return getResume(index);
-        }
-    }
-
-    public final boolean doesNotExist(int index) {
-        return (index < 0);
+        Object index = findExistingIndex(uuid);
+        return getResume((Integer) index);
     }
 
     public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (doesNotExist(index)) {
+        Object index = findExistingIndex(uuid);
+        removeElement((Integer) index);
+        System.out.println("Резюме " + uuid + " успешно удалено");
+        }
+
+    private Object findExistingIndex(String uuid) {
+        Object index = findIndex(uuid);
+        if (!isExist((Integer) index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            removeElement(index);
-            System.out.println("Резюме " + uuid + " успешно удалено");
+            return index;
         }
     }
 
-    protected abstract boolean isValid(Resume r);
-    protected abstract void saveElement(Resume r);
+    private Object findNonExistingIndex(String uuid) {
+        Object index = findIndex(uuid);
+        if (isExist((Integer) index)) {
+            throw new ExistStorageException(uuid);
+        } else {
+            return index;
+        }
+    }
+
+
+    protected abstract void saveElement(Object index, Resume r);
     protected abstract void removeAll();
     public abstract int size();
     protected abstract void removeElement(int index);
-    protected abstract int findIndex(String uuid);
+    protected abstract Object findIndex(String uuid);
     protected abstract Resume getResume(int index);
+    protected abstract boolean isExist(Integer index);
     public abstract Resume[] getAll();
     protected abstract void replace(int index, Resume r);
 }

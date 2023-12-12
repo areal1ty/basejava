@@ -1,5 +1,4 @@
 package com.basejava.webapp.storage;
-import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
@@ -11,22 +10,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
 
     @Override
-    public final boolean isValid(Resume r) {
+    public final void saveElement(Object index, Resume r) {
         String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        } else if (size >= STORAGE_LIMIT) {
+        if (size < STORAGE_LIMIT) {
+            insert((Integer) index, r);
+            size++;
+        } else {
             throw new StorageException("Storage overflow", uuid);
-        } else return true;
-    }
+        }
 
-    @Override
-    public final void saveElement(Resume r) {
-        String uuid = r.getUuid();
-        int index = findIndex(uuid);
-        insert(index, r);
-        size++;
         }
 
     @Override
@@ -52,6 +44,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    public final boolean isExist(Integer index) {
+        return (index >= 0);
+    }
+
+    @Override
     public final int size() {
         return size;
     }
@@ -63,7 +60,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void insert(int index, Resume r);
 
-    protected abstract int findIndex(String uuid);
+    protected abstract Integer findIndex(String uuid);
 
     protected abstract void fillEmpty(int index);
 }
