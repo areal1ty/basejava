@@ -2,9 +2,6 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Array based storage for Resumes
  */
