@@ -9,6 +9,7 @@ import com.basejava.webapp.storage.Storage;
  */
 public class MainTestArrayStorage {
     static final Storage ARRAY_STORAGE = new ArrayStorage();
+
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1");
         Resume r2 = new Resume("uuid2");

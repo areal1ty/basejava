@@ -2,50 +2,57 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-public class MapStorage extends AbstractStorage{
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapStorage extends AbstractStorage {
+    Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void saveElement(Object index, Resume r) {
-
+    protected void doSave(Object index, Resume r) {
+        storage.put(r.getUuid(), r);
     }
 
     @Override
-    protected void removeAll() {
-
+    protected void doClear() {
+        storage.clear();
     }
 
     @Override
     public int size() {
-        return 0;
+        return storage.size();
     }
 
     @Override
-    protected void removeElement(int index) {
-
+    protected void doDelete(Object searchKey) {
+        storage.remove((String) searchKey);
     }
 
     @Override
-    protected Integer findIndex(String uuid) {
-        return 0;
+    protected Object findSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
-    protected Resume getResume(int index) {
-        return null;
+    protected Resume doGet(Object searchKey) {
+        return storage.get((String) searchKey);
     }
 
     @Override
-    protected boolean isExist(Integer index) {
-        return false;
+    protected boolean isExist(Object searchKey) {
+        return storage.containsKey((String) searchKey);
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        Resume[] res = storage.values().toArray(new Resume[0]);
+        Arrays.sort(res);
+        return res;
     }
 
     @Override
-    protected void replace(int index, Resume r) {
-
+    protected void doUpdate(Object searchKey, Resume r) {
+        storage.replace((String) searchKey, r);
     }
 }

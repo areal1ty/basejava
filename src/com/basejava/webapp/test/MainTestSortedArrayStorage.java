@@ -6,6 +6,7 @@ import com.basejava.webapp.storage.Storage;
 
 public class MainTestSortedArrayStorage {
     static final Storage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
+
     public static void main(String[] args) {
         Resume r1 = new Resume("6");
         Resume r2 = new Resume("2");

@@ -7,61 +7,69 @@ import com.basejava.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void clear() {
-        removeAll();
+        doClear();
         System.out.println("База данных успешно очищена");
     }
 
     public void update(Resume r) {
         String uuid = r.getUuid();
-        Object index = findExistingIndex(uuid);
-        replace((Integer) index, r);
+        Object searchKey = findExistingIndex(uuid);
+        doUpdate(searchKey, r);
         System.out.println("Резюме " + uuid + " успешно обновлено");
-        }
+    }
 
     public void save(Resume r) {
         String uuid = r.getUuid();
-        Object index = findNonExistingIndex(uuid);
-        saveElement(index, r);
+        Object searchKey = findNonExistingIndex(uuid);
+        doSave(searchKey, r);
         System.out.println("Резюме " + uuid + " успешно добавлено");
     }
 
     public final Resume get(String uuid) {
-        Object index = findExistingIndex(uuid);
-        return getResume((Integer) index);
+        Object searchKey = findExistingIndex(uuid);
+        return doGet(searchKey);
     }
 
     public void delete(String uuid) {
-        Object index = findExistingIndex(uuid);
-        removeElement((Integer) index);
+        Object searchKey = findExistingIndex(uuid);
+        doDelete(searchKey);
         System.out.println("Резюме " + uuid + " успешно удалено");
-        }
+    }
 
     private Object findExistingIndex(String uuid) {
-        Object index = findIndex(uuid);
-        if (!isExist((Integer) index)) {
+        Object searchKey = findSearchKey(uuid);
+        if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         } else {
-            return index;
+            return searchKey;
         }
     }
 
     private Object findNonExistingIndex(String uuid) {
-        Object index = findIndex(uuid);
-        if (isExist((Integer) index)) {
+        Object searchKey = findSearchKey(uuid);
+        if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         } else {
-            return index;
+            return searchKey;
         }
     }
 
 
-    protected abstract void saveElement(Object index, Resume r);
-    protected abstract void removeAll();
+    protected abstract void doSave(Object searchKey, Resume r);
+
+    protected abstract void doClear();
+
     public abstract int size();
-    protected abstract void removeElement(int index);
-    protected abstract Object findIndex(String uuid);
-    protected abstract Resume getResume(int index);
-    protected abstract boolean isExist(Integer index);
+
+    protected abstract void doDelete(Object searchKey);
+
+    protected abstract Object findSearchKey(String uuid);
+
+    protected abstract Resume doGet(Object searchKey);
+
+    protected abstract boolean isExist(Object searchKey);
+
     public abstract Resume[] getAll();
-    protected abstract void replace(int index, Resume r);
+
+    protected abstract void doUpdate(Object searchKey, Resume r);
 }

@@ -103,6 +103,4 @@ public class AbstractStorageTest {
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         assertArrayEquals(expected, actual);
     }
-
-
 }
