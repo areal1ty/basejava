@@ -2,12 +2,11 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
-    Map<String, Resume> storage = new HashMap<>();
+    protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
     protected void doSave(Object index, Resume r) {
@@ -46,9 +45,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        Resume[] res = storage.values().toArray(new Resume[0]);
-        Arrays.sort(res);
-        return res;
+        return storage.values().toArray(new Resume[0]);
     }
 
     @Override
