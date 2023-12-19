@@ -2,7 +2,9 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
@@ -44,8 +46,10 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[0]);
+    public List<Resume> sortResumes(Comparator<Resume> resumeComparator) {
+        List<Resume> resumes =  (List<Resume>) storage.values();
+        resumes.sort(resumeComparator);
+        return resumes;
     }
 
     @Override

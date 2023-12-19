@@ -2,14 +2,15 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
-
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
-
+ 
     @Override
     public final void doSave(Object index, Resume r) {
         String uuid = r.getUuid();
@@ -55,8 +56,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public final Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public final List<Resume> sortResumes(Comparator<Resume> resumeComparator) {
+        Resume[] unsortedStorage = Arrays.copyOf(storage, size);
+        Arrays.sort(unsortedStorage, resumeComparator);
+        return List.of(unsortedStorage);
     }
 
     protected abstract void insert(int index, Resume r);
