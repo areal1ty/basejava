@@ -70,7 +70,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doDelete(Object searchKey);
 
-    protected abstract Object findSearchKey(String uuid);
+    protected abstract Object findSearchKey(String searchKey);
 
     protected abstract Resume doGet(Object searchKey);
 

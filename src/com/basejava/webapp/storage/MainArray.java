@@ -64,7 +64,7 @@ public class MainArray {
     }
 
     static void printAll() {
-        Resume[] all = ARRAY_STORAGE.getAll();
+        Resume[] all = ARRAY_STORAGE.getAllSorted();
         System.out.println("----------------------------");
         if (all.length == 0) {
             System.out.println("Empty");
