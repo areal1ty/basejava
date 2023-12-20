@@ -1,9 +1,15 @@
 package com.basejava.webapp.storage;
 
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-@ExtendWith(Suite.class)
-@Suite.SuiteClasses
-
+@RunWith(Suite.class)
+@Suite.SuiteClasses( {
+        ArrayStorageTest.class,
+        ListStorageTest.class,
+        MapFullNameStorageTest.class,
+        MapUuidStorageTest.class,
+        SortedArrayStorageTest.class
+})
 public class AllStorageTest {
 }
