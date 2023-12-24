@@ -2,13 +2,18 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.model.Resume;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractMapStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage{
     protected final Map<String, Resume> storage = new HashMap<>();
+
+    @Override
+    protected void doSave(Object searchKey, Resume r) {
+        storage.put(r.getUuid(), r);
+    }
 
     @Override
     protected void doClear() {
@@ -22,35 +27,34 @@ public abstract class AbstractMapStorage extends AbstractStorage {
 
     @Override
     protected void doDelete(Object searchKey) {
-        storage.remove((String) searchKey);
+        Resume r = (Resume) searchKey;
+        String uuid = r.getUuid();
+        storage.remove(uuid);
     }
 
     @Override
     protected Object findSearchKey(String searchKey) {
-        return searchKey;
+        return storage.get(searchKey);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return storage.get((String) searchKey);
+        return (Resume) searchKey;
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return storage.containsKey((String) searchKey);
+        return searchKey != null;
     }
 
     @Override
-    public List<Resume> sortResumes(Comparator<Resume> resumeComparator) {
-        List<Resume> resumes = (List<Resume>) storage.values();
-        resumes.sort(resumeComparator);
-        return resumes;
+    public List<Resume> doGetAll() {
+        return new ArrayList<>(storage.values());
     }
 
     @Override
     protected void doUpdate(Object searchKey, Resume r) {
-        storage.replace((String) searchKey, r);
+        storage.put(r.getUuid(), r);
     }
 
-    protected abstract void doSave(Object searchKey, Resume r);
 }

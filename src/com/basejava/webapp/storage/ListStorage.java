@@ -3,7 +3,6 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -48,8 +47,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public final List<Resume> sortResumes(Comparator<Resume> resumeComparator) {
-        storage.sort(resumeComparator);
+    public final List<Resume> doGetAll() {
         return storage;
     }
 

@@ -3,14 +3,12 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
-    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
- 
     @Override
     public final void doSave(Object index, Resume r) {
         String uuid = r.getUuid();
@@ -20,17 +18,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         } else {
             throw new StorageException("Storage overflow", uuid);
         }
-
     }
 
     @Override
     public final void doUpdate(Object searchKey, Resume r) {
-        storage[(int) searchKey] = r;
+        storage[(Integer) searchKey] = r;
     }
 
     @Override
     public final void doDelete(Object searchKey) {
         fillEmpty((Integer) searchKey);
+        storage[size - 1] = null;
         size--;
     }
 
@@ -42,12 +40,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public final Resume doGet(Object searchKey) {
-        return storage[(int) searchKey];
+        return storage[(Integer) searchKey];
     }
 
     @Override
     public final boolean isExist(Object searchKey) {
-        return ((int) searchKey >= 0);
+        return ((Integer) searchKey >= 0);
     }
 
     @Override
@@ -56,10 +54,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public final List<Resume> sortResumes(Comparator<Resume> resumeComparator) {
-        Resume[] unsortedStorage = Arrays.copyOf(storage, size);
-        Arrays.sort(unsortedStorage, resumeComparator);
-        return List.of(unsortedStorage);
+    public final List<Resume> doGetAll() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size()));
     }
 
     protected abstract void insert(int index, Resume r);
