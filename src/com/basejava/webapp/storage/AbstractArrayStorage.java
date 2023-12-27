@@ -9,11 +9,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
+
     @Override
     public final void doSave(Integer index, Resume r) {
         String uuid = r.getUuid();
         if (size < STORAGE_LIMIT) {
-            insert( index, r);
+            insert(index, r);
             size++;
         } else {
             throw new StorageException("Storage overflow", uuid);

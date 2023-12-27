@@ -6,30 +6,33 @@ import com.basejava.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SearchKey> implements Storage {
     protected final static Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
     public void clear() {
         doClear();
-        System.out.println("База данных успешно очищена");
+        LOG.info("database cleared");
     }
 
     public void update(Resume r) {
         String uuid = r.getUuid();
         SearchKey searchKey = findExistingSearchKey(uuid);
         doUpdate(searchKey, r);
-        System.out.println("Резюме " + uuid + " успешно обновлено");
+        LOG.info(r + " updated");
     }
 
     public void save(Resume r) {
         String uuid = r.getUuid();
         SearchKey searchKey = findNonExistingSearchKey(uuid);
         doSave(searchKey, r);
-        System.out.println("Резюме " + uuid + " успешно добавлено");
+        LOG.info(r + " saved");
     }
 
     public final Resume get(String uuid) {
+        LOG.info("got " + uuid);
         SearchKey searchKey = findExistingSearchKey(uuid);
         return doGet(searchKey);
     }
@@ -37,7 +40,7 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
     public void delete(String uuid) {
         SearchKey searchKey = findExistingSearchKey(uuid);
         doDelete(searchKey);
-        System.out.println("Резюме " + uuid + " успешно удалено");
+        LOG.info(uuid + " deleted");
     }
 
     private SearchKey findExistingSearchKey(String uuid) {
