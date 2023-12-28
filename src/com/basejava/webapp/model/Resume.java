@@ -1,5 +1,7 @@
 package com.basejava.webapp.model;
 
+import lombok.Getter;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,7 +12,9 @@ import java.util.UUID;
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
+    @Getter
     private final String uuid;
+    @Getter
     private final String fullName;
 
     public Resume(String fullName) {
@@ -27,14 +31,6 @@ public class Resume implements Comparable<Resume> {
     @Override
     public String toString() {
         return uuid + "(" + fullName + ")";
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getFullName() {
-        return fullName;
     }
 
     @Override
