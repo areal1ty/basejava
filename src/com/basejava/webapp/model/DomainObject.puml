@@ -1,18 +1,60 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Resume
-class TextUnit
-class Link
+abstract class Unit
+class Resume {
+-String uuid
+-String fullName
+-Map<ContactsTypes, String> contacts
+-Map<UnitTypes, Unit> unit
+}
+class Content {
+    - Link link;
+    - LocalDate dateOfStart;
+    - LocalDate dateOfEnd;
+    - String position;
+    - String desc;
+}
+
+class TextUnit {
+-String text
+}
+class ContentUnit {
+-List<Content> content
+}
+class ListUnit {
+-List<String> items
+}
+class Link {
++String title
++String url
+}
+
+TextUnit --> Unit
+ContentUnit *----> Unit
+ListUnit --> Unit
+Resume *----> Unit
+ContentUnit --> Content
 
 
-enum SectionType {
+enum UnitTypes {
     PERSONAL,
     OBJECTIVE,
     ACHIEVEMENTS,
     QUALIFICATIONS,
     EXPERIENCE,
     EDUCATION;
+}
+
+enum ContactsTypes {
+    LOCATION,
+    PHONE_NUMBER,
+    SKYPE,
+    EMAIL,
+    LINKEDIN,
+    GITHUB,
+    STACKOVERFLOW,
+    HOME_PAGE;
 }
 
 @enduml
