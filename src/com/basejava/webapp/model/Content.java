@@ -32,6 +32,5 @@ public class Content {
                 ", dateOfEnd = " + dateOfEnd +
                 ", position = " + position +
                 "(desc = " + desc + ")]";
-
     }
 }

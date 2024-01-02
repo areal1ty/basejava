@@ -20,5 +20,4 @@ public final class Link {
     public String toString() {
         return "Link[" + title + ", " + url + "]";
     }
-
 }
