@@ -4,10 +4,17 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-@EqualsAndHashCode(callSuper = true)
-public record Link(@Getter String title, @Getter String url) {
+@EqualsAndHashCode()
+public final class Link {
+    @Getter
+    private final String title;
+    @Getter
+    private final String url;
+
     @NonNull
-    public Link {
+    public Link(String title, String url) {
+        this.title = title;
+        this.url = url;
     }
 
     public String toString() {

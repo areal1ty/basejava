@@ -22,7 +22,9 @@ public class Resume implements Comparable<Resume> {
     @NonNull
     @Getter
     private final String fullName;
+    @Getter
     private final Map<ContactsTypes, String> contacts = new EnumMap<>(ContactsTypes.class);
+    @Getter
     private final Map<UnitTypes, Unit> units = new EnumMap<>(UnitTypes.class);
 
     public Resume(String fullName) {
@@ -32,6 +34,14 @@ public class Resume implements Comparable<Resume> {
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
+    }
+
+   public void addContact(ContactsTypes type, String value) {
+        contacts.put(type, value);
+   }
+
+   public void addUnit(UnitTypes type, Unit unit) {
+        units.put(type, unit);
     }
 
     @Override

@@ -8,6 +8,7 @@ class Resume {
 -Map<ContactsTypes, String> contacts
 -Map<UnitTypes, Unit> unit
 }
+
 class Content {
     - Link link;
     - LocalDate dateOfStart;
@@ -25,36 +26,11 @@ class ContentUnit {
 class ListUnit {
 -List<String> items
 }
-class Link {
-+String title
-+String url
-}
 
 TextUnit --> Unit
 ContentUnit *----> Unit
 ListUnit --> Unit
 Resume *----> Unit
 ContentUnit --> Content
-
-
-enum UnitTypes {
-    PERSONAL,
-    OBJECTIVE,
-    ACHIEVEMENTS,
-    QUALIFICATIONS,
-    EXPERIENCE,
-    EDUCATION;
-}
-
-enum ContactsTypes {
-    LOCATION,
-    PHONE_NUMBER,
-    SKYPE,
-    EMAIL,
-    LINKEDIN,
-    GITHUB,
-    STACKOVERFLOW,
-    HOME_PAGE;
-}
 
 @enduml
