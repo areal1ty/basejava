@@ -11,15 +11,10 @@ public class Organization {
     @NonNull
     private final String title;
     private final List<Period> periods;
-    @NonNull
-    private final String position;
-    private final String description;
 
-    public Organization(String title, String url, String position, String desc, List<Period> periods) {
+    public Organization(String title, String url, List<Period> periods) {
         this.title = title;
         this.website = new Link(title, url);
-        this.position = position;
-        this.description = desc;
         this.periods = periods;
     }
 

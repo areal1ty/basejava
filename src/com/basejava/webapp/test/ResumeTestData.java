@@ -52,13 +52,13 @@ public class ResumeTestData {
             }
         };
 
-        Organization experience1 = new Organization("Java Online Projects", "http://javaops.ru/","Организация команды бэкэнда и фронтэнда, архитектура, постановка и" +
-                " ведение задач, успешная реализация проектов для сторонних заказчиков", "Приложение «MiniJira»: реализация багтрекинговой системы для обучения и " +
+        Organization experience1 = new Organization("Java Online Projects", "http://javaops.ru/", List.of(new Period(LocalDate.of(2018, 1, 1), LocalDate.now(), "Организация команды бэкэнда и фронтэнда, архитектура, постановка и" +
+                " ведение задач, успешная реализация проектов для сторонних заказчиков","Приложение «MiniJira»: реализация багтрекинговой системы для обучения и " +
                 "внутреннего использования с настраиваемым графом перехода состояний и древовидной организацией проктов, спринтов и задач. Spring Boot, Thymeleaf, Postgres, " +
-                "REST OpenAPI, OAuth2, Mapstruct, Liquibase", List.of(new Period(LocalDate.of(2018, 1, 1), LocalDate.now())));
+                "REST OpenAPI, OAuth2, Mapstruct, Liquibase" )));
 
         Organization education1 = new Organization("Санкт-Петербургский национальный исследовательский университет информации и оптики", "http://www.ifmo.ru/",
-                "Инженер", "программист Fortran, C", List.of(new Period(LocalDate.of(1987, 1, 1), LocalDate.of(1993, 1, 1))));
+                List.of(new Period(LocalDate.of(1987, 1, 1), LocalDate.of(1993, 1, 1), "Инженер", "программист Fortran, C")));
 
         List<Organization> experience = new ArrayList<>() {
             {
