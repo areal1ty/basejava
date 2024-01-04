@@ -1,36 +1,36 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class Unit
+abstract class Section
 class Resume {
 -String uuid
 -String fullName
--Map<ContactsTypes, String> contacts
--Map<UnitTypes, Unit> unit
+-Map<ContactsType, String> contacts
+-Map<SectionTypes, Section> sections
 }
 
-class Content {
-    - Link link;
-    - LocalDate dateOfStart;
-    - LocalDate dateOfEnd;
+class Organization {
+    - Link website;
+    - String title;
+    - List<Period> periods;
     - String position;
     - String desc;
 }
 
-class TextUnit {
+class TextSection {
 -String text
 }
-class ContentUnit {
--List<Content> content
+class OrganizationSection {
+-List<Organization> organization
 }
-class ListUnit {
+class ListSection {
 -List<String> items
 }
 
-TextUnit --> Unit
-ContentUnit *----> Unit
-ListUnit --> Unit
-Resume *----> Unit
-ContentUnit --> Content
+TextSection --> Section
+OrganizationSection *----> Section
+ListSection --> Section
+Resume *----> Section
+OrganizationSection --> Organization
 
 @enduml

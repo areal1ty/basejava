@@ -36,7 +36,7 @@
 - [Что такое JDK? Введение в средства разработки Java](https://topjava.ru/blog/what-is-the-jdk)
 - [Что такое JRE? Введение в среду выполнения Java](https://topjava.ru/blog/what-is-the-jre)
 - [Что такое Java? История создания](http://www.intuit.ru/studies/courses/16/16/lecture/27105)
-- [Programming languages TIOBE Index](http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html)
+- [Programming languages TIOBE Index](http://www.tiobe.com/index.php/organization/paperinfo/tpci/index.html)
 - [Java Microbenchmark JMH](http://openjdk.java.net/projects/code-tools/jmh/) (используем на курсе [MasterJava](https://github.com/JavaWebinar/masterjava#Занятие-2))
 - [Руководство по массивам в Java](https://topjava.ru/blog/rukovodstvo-po-massivam-v-java-ch1)
 

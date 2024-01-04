@@ -1,7 +1,6 @@
 package com.basejava.webapp.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
 
 import java.util.EnumMap;
@@ -12,20 +11,16 @@ import java.util.UUID;
  * Initial resume class
  */
 
-@EqualsAndHashCode
+@Data
 public class Resume implements Comparable<Resume> {
 
     // Unique identifier
     @NonNull
-    @Getter
     private final String uuid;
     @NonNull
-    @Getter
     private final String fullName;
-    @Getter
-    private final Map<ContactsTypes, String> contacts = new EnumMap<>(ContactsTypes.class);
-    @Getter
-    private final Map<UnitTypes, Unit> units = new EnumMap<>(UnitTypes.class);
+    private final Map<ContactsType, String> contacts = new EnumMap<>(ContactsType.class);
+    private final Map<SectionTypes, Section> sections = new EnumMap<>(SectionTypes.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -36,17 +31,12 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
     }
 
-   public void addContact(ContactsTypes type, String value) {
+   public void addContact(ContactsType type, String value) {
         contacts.put(type, value);
    }
 
-   public void addUnit(UnitTypes type, Unit unit) {
-        units.put(type, unit);
-    }
-
-    @Override
-    public String toString() {
-        return uuid + "(" + fullName + ")";
+   public void addUnit(SectionTypes type, Section section) {
+        sections.put(type, section);
     }
 
     @Override

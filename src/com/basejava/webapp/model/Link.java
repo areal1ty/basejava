@@ -1,14 +1,10 @@
 package com.basejava.webapp.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
-@EqualsAndHashCode()
+@Data
 public final class Link {
-    @Getter
     private final String title;
-    @Getter
     private final String url;
 
     @NonNull
@@ -17,7 +13,4 @@ public final class Link {
         this.url = url;
     }
 
-    public String toString() {
-        return "Link[" + title + ", " + url + "]";
-    }
 }

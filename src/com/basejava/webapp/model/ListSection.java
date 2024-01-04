@@ -7,12 +7,12 @@ import lombok.NonNull;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-public class ListUnit extends Unit {
+public class ListSection extends Section {
     @NonNull
     @Getter
     private final List<String> items;
 
-    public ListUnit(List<String> items) {
+    public ListSection(List<String> items) {
         this.items = items;
     }
 

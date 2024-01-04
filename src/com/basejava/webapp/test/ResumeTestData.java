@@ -10,15 +10,15 @@ import java.util.Map;
 public class ResumeTestData {
     public static void main(String[] args) {
         Resume testResume = new Resume("Григорий Кислин");
-        testResume.addContact(ContactsTypes.LOCATION, "Россия, г. Санкт-Петербург");
-        testResume.addContact(ContactsTypes.PHONE_NUMBER, "+7 (921) 855 0482");
-        testResume.addContact(ContactsTypes.EMAIL, "gkislin@yandex.ru");
-        testResume.addContact(ContactsTypes.TELEGRAM, "@gkislin");
-        testResume.addContact(ContactsTypes.SKYPE, "grigory.kislin");
-        testResume.addContact(ContactsTypes.SOCIAL_MEDIA, "https://habr.com/ru/users/gkislin/");
-        testResume.addContact(ContactsTypes.STACKOVERFLOW, "http://stackoverflow.com/users/548473/gkislin");
-        testResume.addContact(ContactsTypes.GITHUB, "https://github.com/gkislin/`");
-        testResume.addContact(ContactsTypes.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        testResume.addContact(ContactsType.LOCATION, "Россия, г. Санкт-Петербург");
+        testResume.addContact(ContactsType.PHONE_NUMBER, "+7 (921) 855 0482");
+        testResume.addContact(ContactsType.EMAIL, "gkislin@yandex.ru");
+        testResume.addContact(ContactsType.TELEGRAM, "@gkislin");
+        testResume.addContact(ContactsType.SKYPE, "grigory.kislin");
+        testResume.addContact(ContactsType.SOCIAL_MEDIA, "https://habr.com/ru/users/gkislin/");
+        testResume.addContact(ContactsType.STACKOVERFLOW, "http://stackoverflow.com/users/548473/gkislin");
+        testResume.addContact(ContactsType.GITHUB, "https://github.com/gkislin/`");
+        testResume.addContact(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
 
         List<String> personal = new ArrayList<>() {
             {
@@ -52,47 +52,47 @@ public class ResumeTestData {
             }
         };
 
-        Content experience1 = new Content("Java Online Projects", "http://javaops.ru/","Организация команды бэкэнда и фронтэнда, архитектура, постановка и" +
+        Organization experience1 = new Organization("Java Online Projects", "http://javaops.ru/","Организация команды бэкэнда и фронтэнда, архитектура, постановка и" +
                 " ведение задач, успешная реализация проектов для сторонних заказчиков", "Приложение «MiniJira»: реализация багтрекинговой системы для обучения и " +
                 "внутреннего использования с настраиваемым графом перехода состояний и древовидной организацией проктов, спринтов и задач. Spring Boot, Thymeleaf, Postgres, " +
-                "REST OpenAPI, OAuth2, Mapstruct, Liquibase", LocalDate.of(2018, 1, 1), LocalDate.now());
+                "REST OpenAPI, OAuth2, Mapstruct, Liquibase", List.of(new Period(LocalDate.of(2018, 1, 1), LocalDate.now())));
 
-        Content education1 = new Content("Санкт-Петербургский национальный исследовательский университет информации и оптики", "http://www.ifmo.ru/",
-                "Инженер", "программист Fortran, C", LocalDate.of(1987, 1, 1), LocalDate.of(1993, 1, 1));
+        Organization education1 = new Organization("Санкт-Петербургский национальный исследовательский университет информации и оптики", "http://www.ifmo.ru/",
+                "Инженер", "программист Fortran, C", List.of(new Period(LocalDate.of(1987, 1, 1), LocalDate.of(1993, 1, 1))));
 
-        List<Content> experience = new ArrayList<>() {
+        List<Organization> experience = new ArrayList<>() {
             {
                 add(experience1);
             }
         };
 
-        List<Content> education = new ArrayList<>() {
+        List<Organization> education = new ArrayList<>() {
             {
                 add(education1);
             }
         };
 
-        Unit personalUnit = new ListUnit(personal);
-        Unit positionsUnit = new ListUnit(positions);
-        Unit achievementsUnit = new ListUnit(achievements);
-        Unit qualificationsUnit = new ListUnit(qualifications);
+        Section personalSection = new ListSection(personal);
+        Section positionsSection = new ListSection(positions);
+        Section achievementsSection = new ListSection(achievements);
+        Section qualificationsSection = new ListSection(qualifications);
 
-        Unit experienceUnit = new ContentUnit(experience);
-        Unit educationUnit = new ContentUnit(education);
+        Section experienceSection = new OrganizationSection(experience);
+        Section educationSection = new OrganizationSection(education);
 
-        testResume.addUnit(UnitTypes.PERSONAL,personalUnit);
-        testResume.addUnit(UnitTypes.OBJECTIVE, positionsUnit );
-        testResume.addUnit(UnitTypes.ACHIEVEMENTS, achievementsUnit);
-        testResume.addUnit(UnitTypes.QUALIFICATIONS, qualificationsUnit);
-        testResume.addUnit(UnitTypes.EXPERIENCE, experienceUnit);
-        testResume.addUnit(UnitTypes.EDUCATION, educationUnit);
+        testResume.addUnit(SectionTypes.PERSONAL, personalSection);
+        testResume.addUnit(SectionTypes.OBJECTIVE, positionsSection);
+        testResume.addUnit(SectionTypes.ACHIEVEMENTS, achievementsSection);
+        testResume.addUnit(SectionTypes.QUALIFICATIONS, qualificationsSection);
+        testResume.addUnit(SectionTypes.EXPERIENCE, experienceSection);
+        testResume.addUnit(SectionTypes.EDUCATION, educationSection);
 
         System.out.println(testResume.getFullName());
-        for (Map.Entry<ContactsTypes, String> contact: testResume.getContacts().entrySet()) {
+        for (Map.Entry<ContactsType, String> contact: testResume.getContacts().entrySet()) {
             System.out.println(contact);
         }
 
-        for (Map.Entry<UnitTypes, Unit> unit : testResume.getUnits().entrySet()) {
+        for (Map.Entry<SectionTypes, Section> unit : testResume.getSections().entrySet()) {
             System.out.println(unit);
         }
     }

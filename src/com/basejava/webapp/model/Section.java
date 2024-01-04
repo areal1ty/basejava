@@ -1,5 +1,4 @@
 package com.basejava.webapp.model;
 
-public abstract class Unit {
-
+public abstract class Section {
 }

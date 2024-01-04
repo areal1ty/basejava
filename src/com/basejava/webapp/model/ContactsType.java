@@ -2,7 +2,7 @@ package com.basejava.webapp.model;
 
 import lombok.Getter;
 
-public enum ContactsTypes {
+public enum ContactsType {
     LOCATION("Место проживания"),
     PHONE_NUMBER("Номер телефона"),
     TELEGRAM("Telegram"),
@@ -16,7 +16,7 @@ public enum ContactsTypes {
     @Getter
     private final String title;
 
-    ContactsTypes(String title) {
+    ContactsType(String title) {
         this.title = title;
     }
 }
