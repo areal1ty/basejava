@@ -13,10 +13,13 @@ class Organization {
     - Link website;
     - String title;
     - List<Period> periods;
+}
+class Period {
+    - LocalDate dateOfStart
+    - LocalDate dateOfEnd
     - String position;
     - String desc;
 }
-
 class TextSection {
 -String text
 }
@@ -32,5 +35,5 @@ OrganizationSection *----> Section
 ListSection --> Section
 Resume *----> Section
 OrganizationSection --> Organization
-
+Period *-- Organization
 @enduml
