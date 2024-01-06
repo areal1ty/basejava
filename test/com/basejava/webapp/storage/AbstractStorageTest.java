@@ -3,12 +3,14 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static com.basejava.webapp.test.ResumeTestData.createResume;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
@@ -31,10 +33,10 @@ public abstract class AbstractStorageTest {
     protected static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "Test Name");
-        RESUME_2 = new Resume(UUID_2, "Test Nameone");
-        RESUME_3 = new Resume(UUID_3, "Test Nametwo");
-        RESUME_4 = new Resume(UUID_4, "Test Namethree");
+        RESUME_1 = createResume(UUID_1, "Test Name");
+        RESUME_2 = createResume(UUID_2, "Test Nameone");
+        RESUME_3 = createResume(UUID_3, "Test Nametwo");
+        RESUME_4 = createResume(UUID_4, "Test Namethree");
     }
 
     @BeforeEach
@@ -59,7 +61,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume updateResume = new Resume(UUID_1, "Update Name");
+        Resume updateResume = createResume(UUID_1, "Update Name");
         storage.update(updateResume);
         assertSame(updateResume, storage.get(UUID_1));
     }

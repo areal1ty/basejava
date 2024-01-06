@@ -8,6 +8,76 @@ import java.util.List;
 import java.util.Map;
 
 public class ResumeTestData {
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume r = new Resume(uuid, fullName);
+        r.addContact(ContactType.LOCATION, "-");
+        r.addContact(ContactType.PHONE_NUMBER, "-");
+        r.addContact(ContactType.EMAIL, "-");
+        r.addContact(ContactType.TELEGRAM, "-");
+        r.addContact(ContactType.SKYPE, "-");
+        r.addContact(ContactType.SOCIAL_MEDIA, "-");
+        r.addContact(ContactType.STACKOVERFLOW, "-");
+        r.addContact(ContactType.GITHUB, "-");
+        r.addContact(ContactType.LINKEDIN, "-");
+
+        List<String> personal = new ArrayList<>() {
+            {
+                add("-");
+            }
+        };
+
+        List<String> positions = new ArrayList<>() {
+            {
+                add("-");
+            }};
+
+        List<String> achievements = new ArrayList<>() {
+            {
+                add("-");
+            }
+        };
+
+        List<String> qualifications = new ArrayList<>() {
+            {
+                add("-");
+            }
+        };
+
+        Organization experience1 = new Organization("-", "-", List.of());
+
+        Organization education1 = new Organization("-", "-", List.of());
+
+        List<Organization> experience = new ArrayList<>() {
+            {
+                add(experience1);
+            }
+        };
+
+        List<Organization> education = new ArrayList<>() {
+            {
+                add(education1);
+            }
+        };
+
+        Section personalSection = new ListSection(personal);
+        Section positionsSection = new ListSection(positions);
+        Section achievementsSection = new ListSection(achievements);
+        Section qualificationsSection = new ListSection(qualifications);
+
+        Section experienceSection = new OrganizationSection(experience);
+        Section educationSection = new OrganizationSection(education);
+
+        r.addUnit(SectionType.PERSONAL, personalSection);
+        r.addUnit(SectionType.OBJECTIVE, positionsSection);
+        r.addUnit(SectionType.ACHIEVEMENTS, achievementsSection);
+        r.addUnit(SectionType.QUALIFICATIONS, qualificationsSection);
+        r.addUnit(SectionType.EXPERIENCE, experienceSection);
+        r.addUnit(SectionType.EDUCATION, educationSection);
+
+        return r;
+    }
+
     public static void main(String[] args) {
         Resume testResume = new Resume("Григорий Кислин");
         testResume.addContact(ContactType.LOCATION, "Россия, г. Санкт-Петербург");
