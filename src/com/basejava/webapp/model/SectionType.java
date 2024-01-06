@@ -2,7 +2,7 @@ package com.basejava.webapp.model;
 
 import lombok.Getter;
 
-public enum SectionTypes {
+public enum SectionType {
     PERSONAL("Личные качества"),
     OBJECTIVE("Позиция"),
     ACHIEVEMENTS("Достижения"),
@@ -13,7 +13,7 @@ public enum SectionTypes {
     @Getter
     private final String title;
 
-    SectionTypes(String title) {
+    SectionType(String title) {
         this.title = title;
     }
 

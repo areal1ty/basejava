@@ -10,15 +10,15 @@ import java.util.Map;
 public class ResumeTestData {
     public static void main(String[] args) {
         Resume testResume = new Resume("Григорий Кислин");
-        testResume.addContact(ContactsType.LOCATION, "Россия, г. Санкт-Петербург");
-        testResume.addContact(ContactsType.PHONE_NUMBER, "+7 (921) 855 0482");
-        testResume.addContact(ContactsType.EMAIL, "gkislin@yandex.ru");
-        testResume.addContact(ContactsType.TELEGRAM, "@gkislin");
-        testResume.addContact(ContactsType.SKYPE, "grigory.kislin");
-        testResume.addContact(ContactsType.SOCIAL_MEDIA, "https://habr.com/ru/users/gkislin/");
-        testResume.addContact(ContactsType.STACKOVERFLOW, "http://stackoverflow.com/users/548473/gkislin");
-        testResume.addContact(ContactsType.GITHUB, "https://github.com/gkislin/`");
-        testResume.addContact(ContactsType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        testResume.addContact(ContactType.LOCATION, "Россия, г. Санкт-Петербург");
+        testResume.addContact(ContactType.PHONE_NUMBER, "+7 (921) 855 0482");
+        testResume.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        testResume.addContact(ContactType.TELEGRAM, "@gkislin");
+        testResume.addContact(ContactType.SKYPE, "grigory.kislin");
+        testResume.addContact(ContactType.SOCIAL_MEDIA, "https://habr.com/ru/users/gkislin/");
+        testResume.addContact(ContactType.STACKOVERFLOW, "http://stackoverflow.com/users/548473/gkislin");
+        testResume.addContact(ContactType.GITHUB, "https://github.com/gkislin/`");
+        testResume.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
 
         List<String> personal = new ArrayList<>() {
             {
@@ -80,19 +80,19 @@ public class ResumeTestData {
         Section experienceSection = new OrganizationSection(experience);
         Section educationSection = new OrganizationSection(education);
 
-        testResume.addUnit(SectionTypes.PERSONAL, personalSection);
-        testResume.addUnit(SectionTypes.OBJECTIVE, positionsSection);
-        testResume.addUnit(SectionTypes.ACHIEVEMENTS, achievementsSection);
-        testResume.addUnit(SectionTypes.QUALIFICATIONS, qualificationsSection);
-        testResume.addUnit(SectionTypes.EXPERIENCE, experienceSection);
-        testResume.addUnit(SectionTypes.EDUCATION, educationSection);
+        testResume.addUnit(SectionType.PERSONAL, personalSection);
+        testResume.addUnit(SectionType.OBJECTIVE, positionsSection);
+        testResume.addUnit(SectionType.ACHIEVEMENTS, achievementsSection);
+        testResume.addUnit(SectionType.QUALIFICATIONS, qualificationsSection);
+        testResume.addUnit(SectionType.EXPERIENCE, experienceSection);
+        testResume.addUnit(SectionType.EDUCATION, educationSection);
 
         System.out.println(testResume.getFullName());
-        for (Map.Entry<ContactsType, String> contact: testResume.getContacts().entrySet()) {
+        for (Map.Entry<ContactType, String> contact: testResume.getContacts().entrySet()) {
             System.out.println(contact);
         }
 
-        for (Map.Entry<SectionTypes, Section> unit : testResume.getSections().entrySet()) {
+        for (Map.Entry<SectionType, Section> unit : testResume.getSections().entrySet()) {
             System.out.println(unit);
         }
     }
