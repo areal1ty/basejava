@@ -6,11 +6,9 @@ import lombok.NonNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
@@ -29,11 +27,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-
     @Override
     protected void doSave(File file, Resume r) {
         try {
-            if(file.createNewFile()) doWrite(file, r);
+            if(file.createNewFile()) {
+                doWrite(file, r);
+            }
         } catch (IOException e) {
             throw new StorageException("IO exception occurred", file.getName(), e);
         }
@@ -41,30 +40,31 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doClear() {
-        try(RandomAccessFile raf = new RandomAccessFile(directory, "rws")) {
-            raf.setLength(0);
-        } catch (IOException e) {
-            throw new StorageException("IO Exception, file not found", directory.getName(), e);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                doDelete(file);
+            }
         }
     }
 
     @Override
     public int size() {
         File[] files = directory.listFiles();
-        int size = 0;
-        for (File file : Objects.requireNonNull(files)) {
-            if (file.isFile()) {
-                size += file.length();
-            }
+        if (files == null) {
+            throw new StorageException("Cannot read directory", null);
+        } else {
+            return files.length;
         }
-        return size;
     }
 
     @Override
     protected void doDelete(File file) {
-        if (file.delete()) LOG.info("file deleted");
+        if (file.delete()) {
+            LOG.info("file deleted");
+        }
         else {
-           LOG.info("Error occurred while deleting. File does not exist");
+           throw new StorageException("Error occurred while deleting. File does not exist", file.getName());
         }
     }
 
@@ -91,9 +91,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected List<Resume> doGetAll() {
         List<Resume> res = new ArrayList<>();
         File[] files = directory.listFiles();
-        for (File file : Objects.requireNonNull(files)) {
-            Resume r = doGet(file);
-            res.add(r);
+        if (files == null) {
+            throw new StorageException("directory is empty", directory.getName());
+        }
+        for (File file : files) {
+            res.add(doGet(file));
         }
         return res;
     }
