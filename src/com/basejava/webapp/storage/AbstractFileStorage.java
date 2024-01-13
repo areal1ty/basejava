@@ -30,9 +30,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doSave(File file, Resume r) {
         try {
-            if(file.createNewFile()) {
                 doWrite(file, r);
-            }
         } catch (IOException e) {
             throw new StorageException("IO exception occurred", file.getName(), e);
         }
@@ -45,6 +43,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             for (File file : files) {
                 doDelete(file);
             }
+        } else {
+            throw new StorageException("Error occurred. Storage is empty", directory.getName());
         }
     }
 
@@ -89,15 +89,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAll() {
-        List<Resume> res = new ArrayList<>();
+        List<Resume> resumes = new ArrayList<>();
         File[] files = directory.listFiles();
         if (files == null) {
             throw new StorageException("directory is empty", directory.getName());
         }
         for (File file : files) {
-            res.add(doGet(file));
+            resumes.add(doGet(file));
         }
-        return res;
+        return resumes;
     }
 
     @Override
