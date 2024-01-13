@@ -3,10 +3,14 @@ package com.basejava.webapp.model;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-public final class Period {
+public final class Period implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final LocalDate dateOfStart;
     private final LocalDate dateOfEnd;
     private final String title;

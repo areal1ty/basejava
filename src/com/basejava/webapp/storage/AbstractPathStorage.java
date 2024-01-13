@@ -1,0 +1,82 @@
+package com.basejava.webapp.storage;
+
+import com.basejava.webapp.exception.StorageException;
+import com.basejava.webapp.model.Resume;
+import lombok.NonNull;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class AbstractPathStorage extends AbstractStorage<Path> {
+    @NonNull
+    private final Path directory;
+
+    protected AbstractPathStorage(String dir) {
+        directory = Paths.get(dir);
+        if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
+            throw new IllegalArgumentException(dir + " is not a directory or not writable");
+        }
+    }
+
+    @Override
+    protected void doSave(Path path, Resume r) {
+        Path filePath = directory.resolve(path);
+    }
+
+    @Override
+    protected void doClear() {
+        try(Stream<Path> paths = Files.list(directory)) {
+            paths.forEach(this::doDelete);
+        } catch (IOException e) {
+            throw new StorageException("Error occurred while deleting", null);
+        }
+    }
+
+    @Override
+    public int size() {
+        try(Stream<Path> paths = Files.walk(directory)) {
+            return (int) paths.filter(Files::isRegularFile)
+                    .count();
+        } catch (IOException e) {
+            throw new StorageException("Cannot read Directory", null);
+        }
+    }
+
+    @Override
+    protected void doDelete(Path path) {
+        try {
+            Files.deleteIfExists(directory.resolve(path));
+        } catch (IOException e) {
+            throw new StorageException("Cannot delete file", null);
+        }
+    }
+
+    @Override
+    protected Path findSearchKey(String searchKey) {
+        return Paths.get(searchKey);
+    }
+
+    @Override
+    protected Resume doGet(Path path) {
+
+    }
+
+    @Override
+    protected boolean isExist(Path path) {
+        return Files.exists(path);
+    }
+
+    @Override
+    protected List<Resume> doGetAll() {
+        return null;
+    }
+
+    @Override
+    protected void doUpdate(Path path, Resume r) {
+
+    }
+}

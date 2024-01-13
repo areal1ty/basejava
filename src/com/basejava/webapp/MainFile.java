@@ -3,6 +3,7 @@ package com.basejava.webapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class MainFile {
@@ -33,17 +34,39 @@ public class MainFile {
         }
 
         printDirectoryFiles(dir);
+        printFilesWithIndentation(dir);
     }
 
     public static void printDirectoryFiles(File directory) {
         File[] files = directory.listFiles();
+        Arrays.stream(Objects.requireNonNull(files))
+                .forEach(file -> {
+                   if (file.isDirectory()) {
+                       printDirectoryFiles(file);
+                   } else {
+                       System.out.println(file.getName());
+                   }
+                });
+    }
 
-        for (File file : Objects.requireNonNull(files)) {
-            if (file.isDirectory()) {
-                printDirectoryFiles(file);
-            } else {
-                System.out.println(file.getName());
-            }
-        }
+    public static void printFilesWithIndentation(File directory) {
+        printFilesWithIndentation(directory, 0);
+    }
+
+    private static void printFilesWithIndentation(File directory, int level) {
+        File[] files = directory.listFiles();
+        Arrays.stream(Objects.requireNonNull(files))
+                .forEach(file -> {
+                    if (file.isDirectory()) {
+                        System.out.println(getIndentation(level) + file.getName());
+                        printFilesWithIndentation(file, level + 1);
+                    } else {
+                        System.out.println(getIndentation(level) + file.getName());
+                    }
+                });
+    }
+
+    private static String getIndentation(int level) {
+        return "\t".repeat(level);
     }
     }

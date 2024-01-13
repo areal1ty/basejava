@@ -3,6 +3,8 @@ package com.basejava.webapp.model;
 import lombok.Data;
 import lombok.NonNull;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.UUID;
@@ -12,8 +14,9 @@ import java.util.UUID;
  */
 
 @Data
-public class Resume implements Comparable<Resume> {
-
+public class Resume implements Comparable<Resume>, Serializable{
+    @Serial
+    private static final long serialVersionUID = 1L;
     // Unique identifier
     @NonNull
     private final String uuid;
@@ -40,7 +43,17 @@ public class Resume implements Comparable<Resume> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resume r = (Resume) o;
+        if (uuid.equals(r.uuid)) return true;
+        return fullName.equals(r.fullName);
+    }
+    @Override
     public int compareTo(Resume o) {
-        return uuid.compareTo(o.uuid);
+        int cmp = fullName.compareTo(o.fullName);
+        return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
 }
