@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Section
+class Resume {
+-String uuid
+-String fullName
+-Map<ContactsType, String> contacts
+-Map<SectionTypes, Section> sections
+}
+
+class Organization {
+    - Link website;
+    - String title;
+    - List<Period> periods;
+}
+class Period {
+    - LocalDate dateOfStart
+    - LocalDate dateOfEnd
+    - String position;
+    - String desc;
+}
+class TextSection {
+-String text
+}
+class OrganizationSection {
+-List<Organization> organization
+}
+class ListSection {
+-List<String> items
+}
+
+TextSection --> Section
+OrganizationSection *----> Section
+ListSection --> Section
+Resume *----> Section
+OrganizationSection --> Organization
+Period *-- Organization
+@enduml
