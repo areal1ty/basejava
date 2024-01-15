@@ -35,6 +35,9 @@ public class MainFile {
 
         printDirectoryFiles(dir);
         printFilesWithIndentation(dir);
+
+        File directory = new File ("C:\\Users\\User\\Projects\\basejava\\storage");
+        System.out.println(directory.getAbsolutePath());
     }
 
     public static void printDirectoryFiles(File directory) {
