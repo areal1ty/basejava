@@ -2,7 +2,7 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
-import com.basejava.webapp.storage.serialize.StreamSerializeStrategy;
+import com.basejava.webapp.storage.serialization.StreamSerializeStrategy;
 import lombok.NonNull;
 
 import java.io.BufferedInputStream;
@@ -15,12 +15,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     @NonNull
     private final Path directory;
     private final StreamSerializeStrategy serializeStrategy;
 
-    protected AbstractPathStorage(String dir, StreamSerializeStrategy serializeStrategy) {
+    protected PathStorage(String dir, StreamSerializeStrategy serializeStrategy) {
         directory = Paths.get(dir);
         this.serializeStrategy = serializeStrategy;
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {

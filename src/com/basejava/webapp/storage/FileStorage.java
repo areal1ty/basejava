@@ -2,7 +2,7 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
-import com.basejava.webapp.storage.serialize.StreamSerializeStrategy;
+import com.basejava.webapp.storage.serialization.StreamSerializeStrategy;
 import lombok.NonNull;
 
 import java.io.*;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     @NonNull
     private final File directory;
     private final StreamSerializeStrategy serializeStrategy;
-    private static final Logger LOG = Logger.getLogger(AbstractFileStorage.class.getName());
+    private static final Logger LOG = Logger.getLogger(FileStorage.class.getName());
 
-    protected AbstractFileStorage(File directory, StreamSerializeStrategy serializeStrategy) {
+    protected FileStorage(File directory, StreamSerializeStrategy serializeStrategy) {
         this.serializeStrategy = serializeStrategy;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + "  is not a directory");
@@ -112,6 +112,4 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             throw new StorageException("IO Exception occurred", file.getName(), e);
         }
     }
-
-
 }
