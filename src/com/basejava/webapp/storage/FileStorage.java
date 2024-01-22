@@ -6,7 +6,6 @@ import com.basejava.webapp.storage.serialization.StreamSerializeStrategy;
 import lombok.NonNull;
 
 import java.io.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -21,8 +20,7 @@ public class FileStorage extends AbstractStorage<File> {
         this.serializeStrategy = serializeStrategy;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + "  is not a directory");
-        }
-        else if (!directory.canRead() || !directory.canWrite()) {
+        } else if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException("cannot get access to this file " + directory.getAbsolutePath());
         } else {
             this.directory = directory;
@@ -66,9 +64,8 @@ public class FileStorage extends AbstractStorage<File> {
     protected void doDelete(File file) {
         if (file.delete()) {
             LOG.info("file deleted");
-        }
-        else {
-           throw new StorageException("Error occurred while deleting. File does not exist", file.getName());
+        } else {
+            throw new StorageException("Error occurred while deleting. File does not exist", file.getName());
         }
     }
 

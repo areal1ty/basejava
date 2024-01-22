@@ -36,7 +36,7 @@ public class MainFile {
         printDirectoryFiles(dir);
         printFilesWithIndentation(dir);
 
-        File directory = new File ("C:\\Users\\User\\Projects\\basejava\\storage");
+        File directory = new File("C:\\Users\\User\\Projects\\basejava\\storage");
         System.out.println(directory.getAbsolutePath());
     }
 
@@ -44,11 +44,11 @@ public class MainFile {
         File[] files = directory.listFiles();
         Arrays.stream(Objects.requireNonNull(files))
                 .forEach(file -> {
-                   if (file.isDirectory()) {
-                       printDirectoryFiles(file);
-                   } else {
-                       System.out.println(file.getName());
-                   }
+                    if (file.isDirectory()) {
+                        printDirectoryFiles(file);
+                    } else {
+                        System.out.println(file.getName());
+                    }
                 });
     }
 
@@ -72,4 +72,4 @@ public class MainFile {
     private static String getIndentation(int level) {
         return "\t".repeat(level);
     }
-    }
+}
