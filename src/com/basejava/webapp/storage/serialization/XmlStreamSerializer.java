@@ -3,7 +3,6 @@ package com.basejava.webapp.storage.serialization;
 import com.basejava.webapp.model.*;
 import com.basejava.webapp.util.Xmlparser;
 
-import javax.swing.text.Position;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -14,7 +13,7 @@ public class XmlStreamSerializer implements StreamSerializeStrategy{
     xmlParser = new Xmlparser(
             Resume.class, Organization.class, Link.class,
             OrganizationSection.class, TextSection.class, ListSection.class,
-            Position.class
+            Period.class
     );
     }
 

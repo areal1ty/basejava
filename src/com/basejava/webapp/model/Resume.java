@@ -1,5 +1,6 @@
 package com.basejava.webapp.model;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -14,16 +15,18 @@ import java.util.UUID;
  */
 
 @Data
+@XmlRootElement
 public class Resume implements Comparable<Resume>, Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
     // Unique identifier
     @NonNull
-    private final String uuid;
+    private String uuid;
     @NonNull
-    private final String fullName;
+    private String fullName;
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+    public Resume() {}
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
