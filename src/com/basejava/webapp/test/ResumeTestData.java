@@ -79,6 +79,7 @@ public class ResumeTestData {
     }
 
     public static void main(String[] args) {
+
         Resume testResume = new Resume("Григорий Кислин");
         testResume.addContact(ContactType.LOCATION, "Россия, г. Санкт-Петербург");
         testResume.addContact(ContactType.PHONE_NUMBER, "+7 (921) 855 0482");
