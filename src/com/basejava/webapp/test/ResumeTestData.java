@@ -68,12 +68,12 @@ public class ResumeTestData {
         Section experienceSection = new OrganizationSection(experience);
         Section educationSection = new OrganizationSection(education);
 
-        r.addUnit(SectionType.PERSONAL, personalSection);
-        r.addUnit(SectionType.OBJECTIVE, positionsSection);
-        r.addUnit(SectionType.ACHIEVEMENTS, achievementsSection);
-        r.addUnit(SectionType.QUALIFICATIONS, qualificationsSection);
-        r.addUnit(SectionType.EXPERIENCE, experienceSection);
-        r.addUnit(SectionType.EDUCATION, educationSection);
+        r.addSection(SectionType.PERSONAL, personalSection);
+        r.addSection(SectionType.OBJECTIVE, positionsSection);
+        r.addSection(SectionType.ACHIEVEMENTS, achievementsSection);
+        r.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
+        r.addSection(SectionType.EXPERIENCE, experienceSection);
+        r.addSection(SectionType.EDUCATION, educationSection);
 
         return r;
     }
@@ -151,12 +151,12 @@ public class ResumeTestData {
         Section experienceSection = new OrganizationSection(experience);
         Section educationSection = new OrganizationSection(education);
 
-        testResume.addUnit(SectionType.PERSONAL, personalSection);
-        testResume.addUnit(SectionType.OBJECTIVE, positionsSection);
-        testResume.addUnit(SectionType.ACHIEVEMENTS, achievementsSection);
-        testResume.addUnit(SectionType.QUALIFICATIONS, qualificationsSection);
-        testResume.addUnit(SectionType.EXPERIENCE, experienceSection);
-        testResume.addUnit(SectionType.EDUCATION, educationSection);
+        testResume.addSection(SectionType.PERSONAL, personalSection);
+        testResume.addSection(SectionType.OBJECTIVE, positionsSection);
+        testResume.addSection(SectionType.ACHIEVEMENTS, achievementsSection);
+        testResume.addSection(SectionType.QUALIFICATIONS, qualificationsSection);
+        testResume.addSection(SectionType.EXPERIENCE, experienceSection);
+        testResume.addSection(SectionType.EDUCATION, educationSection);
 
         System.out.println(testResume.getFullName());
         for (Map.Entry<ContactType, String> contact: testResume.getContacts().entrySet()) {

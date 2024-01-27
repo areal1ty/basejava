@@ -1,7 +1,9 @@
 package com.basejava.webapp.model;
 
+import com.basejava.webapp.util.JsonFieldAdapter;
 import com.basejava.webapp.util.LocalDateAdapter;
 
+import com.google.gson.annotations.JsonAdapter;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -19,8 +21,10 @@ public final class Period implements Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @JsonAdapter(JsonFieldAdapter.class)
     private final LocalDate dateOfStart;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    @JsonAdapter(JsonFieldAdapter.class)
     private final LocalDate dateOfEnd;
     private final String title;
     private final String description;

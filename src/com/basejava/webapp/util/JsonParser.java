@@ -10,7 +10,7 @@ import java.io.Writer;
 public class JsonParser {
     private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(Section.class, new JsonFieldAdapter<>())
-            .excludeFieldsWithoutExposeAnnotation()
+            .setPrettyPrinting()
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {
