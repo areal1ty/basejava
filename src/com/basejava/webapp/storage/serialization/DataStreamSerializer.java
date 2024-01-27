@@ -36,7 +36,6 @@ public class DataStreamSerializer implements StreamSerializeStrategy{
                 Section s = entry.getValue();
                 dos.writeUTF(t.name());
                 switch (t) {
-                    // case PERSONAL, OBJECTIVE -> dos.writeUTF(((TextSection) s).getText());
                     case PERSONAL, OBJECTIVE, ACHIEVEMENTS, QUALIFICATIONS -> writeInCollection(((ListSection) s).getItems(), dos::writeUTF, dos);
                     case EXPERIENCE, EDUCATION -> writeInCollection(((OrganizationSection) s).getOrganization(), organization -> {
                         dos.writeUTF(organization.getWebsite().getTitle());
@@ -55,7 +54,6 @@ public class DataStreamSerializer implements StreamSerializeStrategy{
 
     private Section readSection(SectionType sectionType, DataInputStream dis) throws IOException{
         return switch (sectionType) {
-            // case PERSONAL, OBJECTIVE -> new TextSection(dis.readUTF());
             case PERSONAL, OBJECTIVE, ACHIEVEMENTS, QUALIFICATIONS -> new ListSection(readArrayList(dis::readUTF, dis));
             case EXPERIENCE, EDUCATION -> new OrganizationSection(
                     readArrayList(() -> new Organization(
