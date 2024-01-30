@@ -40,21 +40,12 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected void doClear() {
-        try(Stream<Path> paths = Files.list(directory)) {
-            paths.forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Error occurred while deleting", null);
-        }
+        getFilesList().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
-        try(Stream<Path> paths = Files.walk(directory)) {
-            return (int) paths.filter(Files::isRegularFile)
-                    .count();
-        } catch (IOException e) {
-            throw new StorageException("Cannot read Directory", null);
-        }
+        return (int) getFilesList().filter(Files::isRegularFile).count();
     }
 
     @Override
@@ -87,12 +78,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> doGetAll() {
-        try (Stream<Path> files = Files.list(directory)) {
-            return files.map(this::doGet)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException("Error occurred while reading", null, e);
-        }
+        return getFilesList().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
@@ -101,6 +87,14 @@ public class PathStorage extends AbstractStorage<Path> {
             serializeStrategy.doWrite(new BufferedOutputStream(Files.newOutputStream(path)), r);
         } catch (IOException e) {
             throw new StorageException("Could not write to this file", r.getUuid(), e);
+        }
+    }
+
+    private Stream<Path> getFilesList() {
+        try {
+            return Files.list(directory);
+        } catch (IOException e) {
+            throw new StorageException("Error occurred", null, e);
         }
     }
 }
