@@ -1,43 +1,28 @@
 package com.basejava.webapp;
 
 public class MainConcurrency {
-    private final Object firstResource = new Object();
-    private final Object secondResource = new Object();
 
-    public void firstMethod() {
-        synchronized (firstResource) {
-            System.out.println("1st resource has acquired");
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (secondResource) {
-                System.out.println("2nd resource has acquired");
-            }
-        }
-    }
-
-    public void secondMethod() {
-        synchronized (secondResource) {
-            System.out.println("2nd resource has acquired");
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    private static void deadLock(Object firstResource, Object secondResource) {
+        new Thread(() -> {
             synchronized (firstResource) {
-                System.out.println("1nd resource has acquired");
+                System.out.println("1st resource has been acquired");
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                synchronized (secondResource) {
+                    System.out.println("2nd resource has been acquired");
+                }
             }
-        }
+        }).start();
     }
 
     public static void main(String[] args) {
-        MainConcurrency main = new MainConcurrency();
-        Thread firstThread = new Thread(main::firstMethod);
-        Thread secondThread = new Thread(main::secondMethod);
+        final Object firstResource = new Object();
+        final Object secondResource = new Object();
 
-        firstThread.start();
-        secondThread.start();
+        deadLock(firstResource, secondResource);
+        deadLock(secondResource, firstResource);
     }
 }
