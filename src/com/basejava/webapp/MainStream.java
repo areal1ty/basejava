@@ -19,8 +19,8 @@ public class MainStream {
     static int minValue(int[] values) {
         return Arrays.stream(values)
                 .distinct()
-                .reduce((a, b) -> a * 10 + b)
-                .orElse(0);
+                .sorted()
+                .reduce(0 ,(a, b) -> a * 10 + b);
     }
 
     static List<Integer> oddOrEven(List<Integer> integers) {
@@ -28,5 +28,4 @@ public class MainStream {
         return integers.stream().filter(n -> (sum % 2 == 0) == (n % 2 != 0))
                 .collect(Collectors.toList());
     }
-
 }
