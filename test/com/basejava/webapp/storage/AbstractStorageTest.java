@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.Configuration;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
@@ -15,13 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
     private static final String DUMMY =  "dummy";
-    protected static final File STORAGE_DIRECTORY = new File("C:\\Users\\User\\IdeaProjects\\basejava\\storage");
+    protected static final File STORAGE_DIRECTORY = Configuration.getInstance().getSTORAGE_DIR();
     protected final Storage storage;
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
-
     protected static final String UUID_1 = "uuid1";
     protected static final String UUID_2 = "uuid2";
     protected static final String UUID_3 = "uuid3";
