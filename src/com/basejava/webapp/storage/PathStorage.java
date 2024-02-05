@@ -33,7 +33,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.createFile(path);
         } catch (IOException e) {
-            throw new StorageException("Error occurred while creating file " + path, null);
+            throw new StorageException("Error occurred while creating file " + path);
         }
         doUpdate(path, r);
     }
@@ -53,7 +53,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.deleteIfExists(directory.resolve(path));
         } catch (IOException e) {
-            throw new StorageException("Cannot delete file", null);
+            throw new StorageException("Cannot delete file");
         }
     }
 
