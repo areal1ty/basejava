@@ -1,17 +1,20 @@
 package com.basejava.webapp.test;
 
 import com.basejava.webapp.model.*;
-
+/*
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+ */
+
 public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
         Resume r = new Resume(uuid, fullName);
-        r.addContact(ContactType.LOCATION, "-");
+        return r;
+       /* r.addContact(ContactType.LOCATION, "-");
         r.addContact(ContactType.PHONE_NUMBER, "-");
         r.addContact(ContactType.EMAIL, "-");
         r.addContact(ContactType.TELEGRAM, "-");
@@ -168,4 +171,6 @@ public class ResumeTestData {
         }
     }
 
-}
+
+        */
+}}
