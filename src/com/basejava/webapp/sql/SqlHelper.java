@@ -12,10 +12,10 @@ public class SqlHelper {
     }
 
     public void execute(String query) {
-        execute(PreparedStatement::execute, query);
+        execute(query, PreparedStatement::execute);
     }
 
-    public <T> T execute(SqlExecutor<T> executor, String query) {
+    public <T> T execute(String query, SqlExecutor<T> executor) {
         try (Connection connection = connectionFactory.getConnection();
             PreparedStatement ps = connection.prepareStatement(query)) {
             return executor.execute(ps);

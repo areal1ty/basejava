@@ -18,12 +18,6 @@ public class Configuration {
     private final Storage storage;
     @Getter
     private final File STORAGE_DIR;
-    @Getter
-    private final String DB_URL;
-    @Getter
-    private final String DB_USERNAME;
-    @Getter
-    private final String DB_PASSWORD;
 
     public static Configuration getInstance() {
         if (INSTANCE == null) {
@@ -31,13 +25,14 @@ public class Configuration {
         }
         return INSTANCE;
     }
+
     private Configuration() {
         try (InputStream is = new FileInputStream(CONFIG_DIR)) {
             props.load(is);
             STORAGE_DIR = new File(props.getProperty("storage.dir"));
-            DB_URL = props.getProperty("db.url");
-            DB_USERNAME = props.getProperty("db.username");
-            DB_PASSWORD = props.getProperty("db.password");
+            String DB_URL = props.getProperty("db.url");
+            String DB_USERNAME = props.getProperty("db.username");
+            String DB_PASSWORD = props.getProperty("db.password");
             storage = new SqlStorage(DB_URL, DB_USERNAME, DB_PASSWORD);
         } catch (IOException e) {
             throw new IllegalStateException("Invalid configuration file" + CONFIG_DIR.getAbsolutePath());
