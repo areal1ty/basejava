@@ -34,8 +34,8 @@ public class SqlStorage implements Storage{
                 if (ps.executeUpdate() != 1) {
                     throw new NotExistStorageException(r.getUuid());
                 }
+                deleteContact(r);
             }
-            deleteContact(r);
             insertContacts(r, connection);
             return null;
         });
@@ -70,9 +70,7 @@ public class SqlStorage implements Storage{
             }
             Resume r = new Resume(uuid, rs.getString("full_name"));
             do {
-                String value = rs.getString("value");
-                ContactType type = ContactType.valueOf(rs.getString("type"));
-                r.addContact(type, value);
+                addContact(r, rs);
             } while (rs.next());
             return r;
         });
