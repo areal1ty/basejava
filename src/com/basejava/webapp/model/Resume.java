@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -20,9 +21,7 @@ public class Resume implements Comparable<Resume>, Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
     // Unique identifier
-    @NonNull
     private String uuid;
-    @NonNull
     private String fullName;
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
@@ -32,7 +31,7 @@ public class Resume implements Comparable<Resume>, Serializable{
         this(UUID.randomUUID().toString(), fullName);
     }
 
-    public Resume(String uuid, String fullName) {
+    public Resume(@NonNull String uuid, @NonNull String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -53,6 +52,11 @@ public class Resume implements Comparable<Resume>, Serializable{
         Resume r = (Resume) o;
         if (uuid.equals(r.uuid)) return true;
         return fullName.equals(r.fullName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, fullName, contacts, sections);
     }
 
     @Override

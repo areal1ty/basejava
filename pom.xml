@@ -6,7 +6,20 @@
     <groupId>org.basejava</groupId>
     <artifactId>resumeDataBase</artifactId>
     <version>0.1</version>
+    <packaging>war</packaging>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <webXml>webapp\WEB-INF\web.xml</webXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
             <maven.compiler.source>19</maven.compiler.source>
             <maven.compiler.target>19</maven.compiler.target>
@@ -59,6 +72,17 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> <version>4.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId> <artifactId>javax.servlet.jsp-api</artifactId> <version>2.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
