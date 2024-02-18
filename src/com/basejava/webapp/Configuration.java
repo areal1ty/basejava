@@ -10,13 +10,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Getter
 public class Configuration {
     private static Configuration INSTANCE;
-    protected static final File CONFIG_DIR = new File("./config/resumes.properties");
-    private final Properties props = new Properties();
-    @Getter
+    protected static final String CONFIG_DIR = "config\\resumes.properties";
+    private static final File PROPS = new File(CONFIG_DIR);
     private final Storage storage;
-    @Getter
     private final File STORAGE_DIR;
 
     public static Configuration getInstance() {
@@ -27,7 +26,8 @@ public class Configuration {
     }
 
     private Configuration() {
-        try (InputStream is = new FileInputStream(CONFIG_DIR)) {
+        try (InputStream is = new FileInputStream(PROPS)) {
+            Properties props = new Properties();
             props.load(is);
             STORAGE_DIR = new File(props.getProperty("storage.dir"));
             String DB_URL = props.getProperty("db.url");
@@ -35,7 +35,8 @@ public class Configuration {
             String DB_PASSWORD = props.getProperty("db.password");
             storage = new SqlStorage(DB_URL, DB_USERNAME, DB_PASSWORD);
         } catch (IOException e) {
-            throw new IllegalStateException("Invalid configuration file" + CONFIG_DIR.getAbsolutePath());
+            throw new IllegalStateException("Invalid configuration file" + PROPS.getAbsolutePath());
         }
     }
+
 }
