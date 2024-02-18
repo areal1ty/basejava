@@ -14,7 +14,17 @@ import java.util.Properties;
 public class Configuration {
     private static Configuration INSTANCE;
     protected static final String CONFIG_DIR = "config\\resumes.properties";
-    private static final File PROPS = new File(CONFIG_DIR);
+    private static final File PROPS = new File(getHomeDirectory(), CONFIG_DIR);
+
+    private static File getHomeDirectory() {
+        String property = System.getProperty("homeDir");
+        File homeDir = new File(property == null ? "." : property);
+        if (!homeDir.isDirectory()) {
+            throw new IllegalStateException(homeDir + "isn't a directory!");
+        }
+        return homeDir;
+    }
+
     private final Storage storage;
     private final File STORAGE_DIR;
 
