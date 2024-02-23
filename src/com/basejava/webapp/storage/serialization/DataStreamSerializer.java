@@ -63,7 +63,7 @@ public class DataStreamSerializer implements StreamSerializeStrategy{
             case PERSONAL, OBJECTIVE, ACHIEVEMENTS, QUALIFICATIONS -> new ListSection(readInArrayList(dis, dis::readUTF));
             case EXPERIENCE, EDUCATION -> new OrganizationSection(
                     readInArrayList(dis, () -> new Organization(
-                            dis.readUTF(), dis.readUTF(),
+                            new Link(dis.readUTF(), dis.readUTF()),
                             readInArrayList(dis, () -> new Period(
                                     readLD(dis), readLD(dis),
                                     dis.readUTF(), dis.readUTF())))));

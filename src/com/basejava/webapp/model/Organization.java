@@ -5,21 +5,27 @@ import lombok.NonNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
 public class Organization implements Serializable{
+    public static final Organization EMPTY_ORGANIZATION = new Organization("", "", Period.EMPTY_PERIOD) ;
     @Serial
     private static final long serialVersionUID = 1L;
-    private final Link website;
+    private Link website;
     @NonNull
-    private final String title;
-    private final List<Period> periods;
+    private String title;
+    private List<Period> periods;
 
-    public Organization(String title, String url, List<Period> periods) {
-        this.title = title;
-        this.website = new Link(title, url);
-        this.periods = periods;
+    public Organization() {}
+
+    public Organization(String title, String url, Period... periods) {
+        this(new Link(title, url), Arrays.asList(periods));
     }
 
+    public Organization(Link website, List<Period> periods) {
+        this.website = website;
+        this.periods = periods;
+    }
 }

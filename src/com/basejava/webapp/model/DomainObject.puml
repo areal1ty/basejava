@@ -20,9 +20,7 @@ class Period {
     - String position;
     - String desc;
 }
-class TextSection {
--String text
-}
+
 class OrganizationSection {
 -List<Organization> organization
 }
@@ -30,7 +28,6 @@ class ListSection {
 -List<String> items
 }
 
-TextSection --> Section
 OrganizationSection *----> Section
 ListSection --> Section
 Resume *----> Section

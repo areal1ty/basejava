@@ -1,5 +1,6 @@
 package com.basejava.webapp.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.NonNull;
@@ -20,10 +21,25 @@ import java.util.UUID;
 public class Resume implements Comparable<Resume>, Serializable{
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public static final Resume EMPTY_RESUME = new Resume();
+    static {
+        EMPTY_RESUME.addSection(SectionType.OBJECTIVE, ListSection.EMPTY_SECTION);
+        EMPTY_RESUME.addSection(SectionType.PERSONAL, ListSection.EMPTY_SECTION);
+        EMPTY_RESUME.addSection(SectionType.ACHIEVEMENTS, ListSection.EMPTY_SECTION);
+        EMPTY_RESUME.addSection(SectionType.QUALIFICATIONS, ListSection.EMPTY_SECTION);
+        EMPTY_RESUME.addSection(SectionType.EXPERIENCE, new OrganizationSection(Organization.EMPTY_ORGANIZATION));
+        EMPTY_RESUME.addSection(SectionType.EDUCATION, new OrganizationSection(Organization.EMPTY_ORGANIZATION));
+    }
+
     // Unique identifier
+    @Expose
     private String uuid;
+    @Expose
     private String fullName;
+    @Expose
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    @Expose
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     public Resume() {}
 
