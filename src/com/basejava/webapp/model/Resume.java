@@ -55,14 +55,16 @@ public class Resume implements Comparable<Resume>, Serializable{
    public void addContact(ContactType type, String value) {
         contacts.put(type, value);
    }
-
-   public String getContact(ContactType type) {
-        return contacts.get(type);
-   }
-
    public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
+
+    public String getContact(ContactType type) {
+        return contacts.get(type);
+   }
+   public Section getSection(SectionType type) {
+        return sections.get(type);
+   }
 
     @Override
     public boolean equals(Object o) {

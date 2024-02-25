@@ -12,7 +12,7 @@ public class DateUtil {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/yyyy");
     public static final LocalDate NOW = LocalDate.of(2040, 1, 1);
 
-    private static String format(@NonNull LocalDate date) {
+    public static String format(@NonNull LocalDate date) {
         return date.equals(NOW) ? "NOW" : date.format(FORMATTER);
     }
 

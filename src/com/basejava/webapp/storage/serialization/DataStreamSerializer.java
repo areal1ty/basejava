@@ -43,7 +43,7 @@ public class DataStreamSerializer implements StreamSerializeStrategy{
                 dos.writeUTF(t.name());
                 switch (t) {
                     case PERSONAL, OBJECTIVE, ACHIEVEMENTS, QUALIFICATIONS -> writeInCollection(((ListSection) s).getItems(), dos, dos::writeUTF);
-                    case EXPERIENCE, EDUCATION -> writeInCollection(((OrganizationSection) s).getOrganization(), dos, organization -> {
+                    case EXPERIENCE, EDUCATION -> writeInCollection(((OrganizationSection) s).getOrganizations(), dos, organization -> {
                         dos.writeUTF(organization.getWebsite().getTitle());
                         dos.writeUTF(organization.getWebsite().getUrl());
                         writeInCollection(organization.getPeriods(), dos, period -> {

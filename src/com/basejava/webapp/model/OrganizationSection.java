@@ -13,7 +13,7 @@ import java.util.List;
 public class OrganizationSection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
-    private List<Organization> organization;
+    private List<Organization> organizations;
 
     public OrganizationSection() {}
 
@@ -22,10 +22,10 @@ public class OrganizationSection extends Section {
     }
 
     public OrganizationSection(@NonNull List<Organization> organization) {
-        this.organization = organization;
+        this.organizations = organization;
     }
 
     public String toString() {
-        return organization.toString();
+        return organizations.toString();
     }
 }
