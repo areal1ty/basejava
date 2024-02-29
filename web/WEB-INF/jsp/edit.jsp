@@ -93,13 +93,13 @@
                                     <dt>Позиция:</dt>
                                     <dd><label>
                                         <input type="text" name='${type}${counter.index}title' size=75
-                                                   value="${periods.title}">
+                                               value="${periods.title}">
                                     </label>
                                 </dl>
                                 <dl>
                                     <dt>Описание:</dt>
                                     <dd><label>
-                                            <textarea name="${type}${counter.index}description" rows=5 cols=75>${periods.description}</textarea>
+                                        <textarea name="${type}${counter.index}description" rows=5 cols=75>${periods.description}</textarea>
                                     </label></dd>
                                 </dl>
                             </c:forEach>
