@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ServletUtil {
     public boolean isSectionEmpty(String value, String[] values) {
         return DateUtil.HtmlUtil.isEmpty(value) && values.length < 2;

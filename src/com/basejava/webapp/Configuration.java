@@ -15,6 +15,8 @@ public class Configuration {
     private static Configuration INSTANCE;
     protected static final String CONFIG_DIR = "config\\resumes.properties";
     private static final File PROPS = new File(getHomeDirectory(), CONFIG_DIR);
+    private final Storage storage;
+    private final File STORAGE_DIR;
 
     private static File getHomeDirectory() {
         String property = System.getProperty("homeDir");
@@ -24,9 +26,6 @@ public class Configuration {
         }
         return homeDir;
     }
-
-    private final Storage storage;
-    private final File STORAGE_DIR;
 
     public static Configuration getInstance() {
         if (INSTANCE == null) {
