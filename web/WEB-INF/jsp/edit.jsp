@@ -3,7 +3,7 @@
 <%@ page import="com.basejava.webapp.model.OrganizationSection" %>
 <%@ page import="com.basejava.webapp.model.SectionType" %>
 <%@ page import="com.basejava.webapp.util.DateUtil" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -19,17 +19,13 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h1>Имя:</h1>
         <dl>
-            <label>
-                <input type="text" name="fullName" size=55 value="${resume.fullName}">
-            </label>
+            <input type="text" name="fullName" size=55 value="${resume.fullName}">
         </dl>
         <h2>Контакты:</h2>
         <c:forEach var="type" items="<%=ContactType.values()%>">
             <dl>
                 <dt>${type.title}</dt>
-                <dd><label>
-                    <input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}">
-                </label></dd>
+                <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}"></dd>
             </dl>
         </c:forEach>
         <hr>
@@ -38,69 +34,50 @@
             <jsp:useBean id="section" type="com.basejava.webapp.model.Section"/>
             <h2><a>${type.title}</a></h2>
             <c:choose>
-                <c:when test="${type=='OBJECTIVE'}">
-                    <label>
-                        <input type='text' name='${type}' size=75 value='<%=section%>'>
-                    </label>
-                </c:when>
-                <c:when test="${type=='PERSONAL'}">
-                    <label>
-                        <textarea name='${type}' cols=75 rows=5><%=section%></textarea>
-                    </label>
-                </c:when>
-                <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENT'}">
-                    <label>
-                        <textarea name='${type}' cols=75 rows=5><%=String.join("\n", ((ListSection) section).getItems())%></textarea>
-                    </label>
+
+                <c:when test="${type=='OBJECTIVE' ||type=='PERSONAL' || type=='QUALIFICATIONS' || type=='ACHIEVEMENTS'}">
+                    <textarea name='${type}' cols=75
+                              rows=5><%=String.join("\n", ((ListSection) section).getItems())%></textarea>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
                     <c:forEach var="org" items="<%=((OrganizationSection) section).getOrganizations()%>"
                                varStatus="counter">
                         <dl>
-                            <dt>Организация:</dt>
-                            <dd><label>
-                                <input type="text" name='${type}' size=100 value="${org.website.title}">
-                            </label></dd>
+                            <dt>Название учереждения:</dt>
+                            <dd><input type="text" name='${type}' size=100 value="${org.website.title}"></dd>
                         </dl>
                         <dl>
-                            <dt>Сайт:</dt>
-                            <dd><label>
+                            <dt>Сайт учереждения:</dt>
+                            <dd>
                                 <input type="text" name='${type}url' size=100 value="${org.website.url}">
-                            </label></dd>
+                            </dd>
                         </dl>
                         <br>
                         <div style="margin-left: 30px">
-                            <c:forEach var="periods" items="${org.periods}">
-                                <jsp:useBean id="periods" type="com.basejava.webapp.model.Period"/>
+                            <c:forEach var="period" items="${org.periods}">
+                                <jsp:useBean id="period" type="com.basejava.webapp.model.Period"/>
                                 <dl>
                                     <dt>С:</dt>
                                     <dd>
-                                        <label>
-                                            <input type="text" name="${type}${counter.index}dateOfStart" size=10
-                                                   value="<%=DateUtil.format(periods.getDateOfStart())%>" placeholder="MM/yyyy">
-                                        </label>
+                                        <input type="text" name="${type}${counter.index}startDate" size=10
+                                               value="<%=DateUtil.format(period.getDateOfStart())%>" placeholder="MM/yyyy">
                                     </dd>
                                 </dl>
                                 <dl>
-                                    <dt>До:</dt>
+                                    <dt>По:</dt>
                                     <dd>
-                                        <label>
-                                            <input type="text" name="${type}${counter.index}dateOfEnd" size=10
-                                                   value="<%=DateUtil.format(periods.getDateOfEnd())%>" placeholder="MM/yyyy">
-                                        </label>
+                                        <input type="text" name="${type}${counter.index}endDate" size=10
+                                               value="<%=DateUtil.format(period.getDateOfEnd())%>" placeholder="MM/yyyy">
                                 </dl>
                                 <dl>
-                                    <dt>Позиция:</dt>
-                                    <dd><label>
-                                        <input type="text" name='${type}${counter.index}title' size=75
-                                               value="${periods.title}">
-                                    </label>
+                                    <dt>Должность:</dt>
+                                    <dd><input type="text" name='${type}${counter.index}title' size=75
+                                               value="${period.title}">
                                 </dl>
                                 <dl>
                                     <dt>Описание:</dt>
-                                    <dd><label>
-                                        <textarea name="${type}${counter.index}description" rows=5 cols=75>${periods.description}</textarea>
-                                    </label></dd>
+                                    <dd><textarea name="${type}${counter.index}description" rows=5
+                                                  cols=75>${period.description}</textarea></dd>
                                 </dl>
                             </c:forEach>
                         </div>
@@ -109,7 +86,7 @@
             </c:choose>
         </c:forEach>
         <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отмена</button>
+        <button onclick="window.history.back()">Отменить</button>
     </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>

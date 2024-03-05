@@ -32,7 +32,6 @@ public final class Period implements Serializable{
     private String title;
     private String description;
 
-
     public Period() {}
 
     public Period(int yearOfStart, Month monthOfStart, String title, String description) {
@@ -49,4 +48,8 @@ public final class Period implements Serializable{
         this.title = title;
         this.description =  description == null ? "" : description;
     }
+
+    public String toString() {
+        return "Period(" + dateOfStart + ',' + dateOfEnd + ',' + title + ',' + description + ')';
+}
 }

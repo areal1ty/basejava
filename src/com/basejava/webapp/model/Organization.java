@@ -28,4 +28,9 @@ public class Organization implements Serializable{
         this.website = website;
         this.periods = periods;
     }
+
+    @Override
+    public String toString() {
+        return "Organization(" + website + "," + periods + ')';
+    }
 }

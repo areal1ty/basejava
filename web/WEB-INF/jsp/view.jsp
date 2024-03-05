@@ -1,14 +1,14 @@
 <%@ page import="com.basejava.webapp.model.ListSection" %>
 <%@ page import="com.basejava.webapp.model.OrganizationSection" %>
 <%@ page import="com.basejava.webapp.util.DateUtil" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="<c:url value="css/style.css"/>">
+    <link rel="stylesheet" href="css/style.css">
     <jsp:useBean id="resume" type="com.basejava.webapp.model.Resume" scope="request"/>
-    <title>Резюме${resume.fullName}</title>
+    <title>Резюме ${resume.fullName}</title>
 </head>
 <body>
 <jsp:include page="fragments/header.jsp"/>
@@ -33,21 +33,7 @@
                 <td colspan="2"><h2><a name="type.name">${type.title}</a></h2></td>
             </tr>
             <c:choose>
-                <c:when test="${type=='OBJECTIVE'}">
-                    <tr>
-                        <td colspan="2">
-                            <h3><%=((ListSection) section).getItems()%></h3>
-                        </td>
-                    </tr>
-                </c:when>
-                <c:when test="${type=='PERSONAL'}">
-                    <tr>
-                        <td colspan="2">
-                            <%=((ListSection) section).getItems()%>
-                        </td>
-                    </tr>
-                </c:when>
-                <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENTS'}">
+                <c:when test="${type == 'OBJECTIVE' || type == 'PERSONAL' || type=='QUALIFICATIONS' || type=='ACHIEVEMENTS'}">
                     <tr>
                         <td colspan="2">
                             <ul>
@@ -67,7 +53,7 @@
                                         <h3>${org.website.title}</h3>
                                     </c:when>
                                     <c:otherwise>
-                                        <h3><a href="${org.website.url}">${org.website.title}</a></h3>
+                                        <h3><a href="${org.website.title}">${org.website.title}</a></h3>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
@@ -86,7 +72,7 @@
         </c:forEach>
     </table>
     <br/>
-    <button onclick="window.history.back()">Ok</button>
+    <button onclick="window.history.back()">ОК</button>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
