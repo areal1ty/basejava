@@ -6,12 +6,12 @@ import com.google.gson.GsonBuilder;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.time.LocalDate;
 
 public class JsonParser {
     private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new JsonLocalDateAdapter())
             .registerTypeAdapter(Section.class, new JsonFieldAdapter<>())
-            .setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
             .create();
 
     public static <T> T read(Reader reader, Class<T> clazz) {

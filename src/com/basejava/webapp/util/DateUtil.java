@@ -1,6 +1,7 @@
 package com.basejava.webapp.util;
 
 import com.basejava.webapp.model.Period;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -8,6 +9,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
+    @Getter
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/yyyy");
     public static final LocalDate NOW = LocalDate.of(2040, 1, 1);
 
@@ -17,9 +19,9 @@ public class DateUtil {
     }
 
     public static LocalDate parseDate(String date) {
-        if (HtmlUtil.isEmpty(date) || date.equals("NOW")) return NOW;
+        if (HtmlUtil.isEmpty(date) || "NOW".equals(date)) return NOW;
         YearMonth yM = YearMonth.parse(date, FORMATTER);
-        return of(yM.getYear(), yM.getMonth());
+        return LocalDate.of(yM.getYear(), yM.getMonth(), 1);
     }
 
     public static LocalDate of(int year, Month month) {
@@ -28,7 +30,7 @@ public class DateUtil {
 
     public static class HtmlUtil {
         public static boolean isEmpty(String text) {
-            return text == null || text.trim().isEmpty();
+            return text == null || text.trim().length() == 0;
         }
         public static String format(Period period) {
             return DateUtil.format(period.getDateOfStart()) + " - " + DateUtil.format(period.getDateOfEnd());

@@ -1,6 +1,5 @@
 package com.basejava.webapp.model;
 
-import com.google.gson.annotations.Expose;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 import lombok.NonNull;
@@ -33,13 +32,9 @@ public class Resume implements Comparable<Resume>, Serializable{
     }
 
     // Unique identifier
-    @Expose
     private String uuid;
-    @Expose
     private String fullName;
-    @Expose
     private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-    @Expose
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
     public Resume() {}
 
