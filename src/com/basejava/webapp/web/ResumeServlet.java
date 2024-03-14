@@ -94,6 +94,10 @@ public class ResumeServlet extends HttpServlet {
         final boolean isNotCreated = (uuid == null || uuid.length() == 0);
         Resume r;
         if (isNotCreated) {
+            if (DateUtil.HtmlUtil.isEmpty(fullName)) {
+                response.sendRedirect("resume");
+                return;
+            }
             r = new Resume(fullName);
         } else {
             r = storage.get(uuid);
@@ -111,7 +115,7 @@ public class ResumeServlet extends HttpServlet {
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
             String[] values = request.getParameterValues(type.name());
-            if (DateUtil.HtmlUtil.isEmpty(value) && values.length < 2) {
+            if (DateUtil.HtmlUtil.isEmpty(value) && values.length <= 1) {
                 r.getSections().remove(type);
             } else {
                 switch (type) {
@@ -119,7 +123,18 @@ public class ResumeServlet extends HttpServlet {
                     case PERSONAL:
                     case ACHIEVEMENTS:
                     case QUALIFICATIONS:
-                        r.addSection(type, new ListSection(value.split("\\n")));
+                        String[] splitValues = value.split("\\n");
+                        List<String> modifiedValues = new ArrayList<>();
+                        for (String splitValue : splitValues) {
+                            if (!DateUtil.HtmlUtil.isEmpty(splitValue.trim())) {
+                                modifiedValues.add(splitValue);
+                            }
+                        }
+                        if (modifiedValues.isEmpty()) {
+                            response.sendRedirect("resume");
+                        } else {
+                            r.addSection(type, new ListSection(modifiedValues.toArray(new String[0])));
+                        }
                         break;
                     case EDUCATION:
                     case EXPERIENCE:

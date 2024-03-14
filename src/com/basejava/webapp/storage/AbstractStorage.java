@@ -10,29 +10,29 @@ import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SearchKey> implements Storage {
     protected final static Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
-    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+    private static final Logger log = Logger.getLogger(AbstractStorage.class.getName());
 
     public void clear() {
         doClear();
-        LOG.info("database cleared");
+        log.info("database cleared");
     }
 
     public void update(Resume r) {
         String uuid = r.getUuid();
         SearchKey searchKey = findExistingSearchKey(uuid);
         doUpdate(searchKey, r);
-        LOG.info(r + " updated");
+        log.info(r + " updated");
     }
 
     public void save(Resume r) {
         String uuid = r.getUuid();
         SearchKey searchKey = findNonExistingSearchKey(uuid);
         doSave(searchKey, r);
-        LOG.info(r + " saved");
+        log.info(r + " saved");
     }
 
     public final Resume get(String uuid) {
-        LOG.info("got " + uuid);
+        log.info("got " + uuid);
         SearchKey searchKey = findExistingSearchKey(uuid);
         return doGet(searchKey);
     }
@@ -40,13 +40,13 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
     public void delete(String uuid) {
         SearchKey searchKey = findExistingSearchKey(uuid);
         doDelete(searchKey);
-        LOG.info(uuid + " deleted");
+        log.info(uuid + " deleted");
     }
 
     private SearchKey findExistingSearchKey(String uuid) {
         SearchKey searchKey = findSearchKey(uuid);
         if (!isExist(searchKey)) {
-            LOG.warning("Resume " + uuid + " doesn't exist");
+            log.warning("Resume " + uuid + " doesn't exist");
             throw new NotExistStorageException(uuid);
         } else {
             return searchKey;
@@ -56,7 +56,7 @@ public abstract class AbstractStorage<SearchKey> implements Storage {
     private SearchKey findNonExistingSearchKey(String uuid) {
         SearchKey searchKey = findSearchKey(uuid);
         if (isExist(searchKey)) {
-            LOG.warning("Resume " + uuid + " already exist");
+            log.warning("Resume " + uuid + " already exist");
             throw new ExistStorageException(uuid);
         } else {
             return searchKey;
